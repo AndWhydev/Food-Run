@@ -7,6 +7,8 @@ class CustomTextformfield extends StatelessWidget {
   final Widget? suffixIcon;
   final bool obscureText;
   final double borderRadius;
+  final int? maxLines;
+  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
   const CustomTextformfield({
@@ -17,7 +19,9 @@ class CustomTextformfield extends StatelessWidget {
     this.suffixIcon,
     this.obscureText = false,
     this.borderRadius = 12,
-    this.validator
+    this.validator,
+    this.keyboardType,
+    this.maxLines = 1,
   });
 
   @override
@@ -27,6 +31,8 @@ class CustomTextformfield extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: height * 0.01),
       child: TextFormField(
+        maxLines: maxLines,
+        keyboardType: keyboardType,
         validator: validator,
         controller: controller,
         obscureText: obscureText,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/controllers/nav_controller.dart';
 import 'package:foodhub/views/customer/home/widgets/customer_home_mob.dart';
+import 'package:foodhub/views/customer/orders/all_orders.dart';
+import 'package:foodhub/views/customer/profile/profile.dart';
 import 'package:get/get.dart';
 
 class CustomerNavBar extends StatelessWidget {
@@ -8,11 +10,10 @@ class CustomerNavBar extends StatelessWidget {
 
   final NavController navController = Get.put(NavController());
 
-  final List<Widget> _pages = const [
+  final List<Widget> _pages = [
     CustomerHomeMobileView(),
-    Center(child: Text("Search Page")),
-    Center(child: Text("Cart Page")),
-    Center(child: Text("Profile Page")),
+    AllOrdersPage(),
+    UserProfileScreen(),
   ];
 
   Widget _buildNavItem({
@@ -119,23 +120,17 @@ class CustomerNavBar extends StatelessWidget {
                       context: context,
                     ),
                     _buildNavItem(
-                      icon: Icons.search,
+                      icon: Icons.shopping_cart,
                       label: "Search",
                       index: 1,
                       selectedIndex: selectedIndex,
                       context: context,
                     ),
-                    _buildNavItem(
-                      icon: Icons.shopping_cart,
-                      label: "Cart",
-                      index: 2,
-                      selectedIndex: selectedIndex,
-                      context: context,
-                    ),
+
                     _buildNavItem(
                       icon: Icons.person,
                       label: "Profile",
-                      index: 3,
+                      index: 2,
                       selectedIndex: selectedIndex,
                       context: context,
                     ),

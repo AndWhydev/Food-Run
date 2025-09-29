@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/views/auth/login.dart';
+import 'package:foodhub/views/auth/signup.dart';
 import 'package:foodhub/views/auth/web/login_web.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -174,7 +175,7 @@ class Onboarding extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Navigate to signup
+                              Get.to(SignUpScreen());
                             },
                             child: Text(
                               "Sign up",
