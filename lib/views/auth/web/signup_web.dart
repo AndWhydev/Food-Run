@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodhub/views/auth/layout%20decider/login_page.dart';
 import 'package:foodhub/views/auth/login.dart';
+import 'package:foodhub/views/auth/signup.dart';
 import 'package:foodhub/views/auth/web/login_web.dart';
 import 'package:foodhub/views/customer/customer_navbar.dart';
 import 'package:foodhub/widgets/custom_textformfield.dart';
@@ -18,7 +20,7 @@ class SignUpScreenWeb extends StatelessWidget {
           final isWeb = constraints.maxWidth > 600;
 
           if (!isWeb) {
-            return const Center(child: Text("Mobile layout here"));
+            return SignUpScreen();
           }
 
           return SingleChildScrollView(
@@ -39,6 +41,7 @@ class SignUpScreenWeb extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
+                          textAlign: TextAlign.center,
                           "🍔 Taste the Best, Every Bite!",
                           style: GoogleFonts.poppins(
                             fontSize: 26,
@@ -60,7 +63,7 @@ class SignUpScreenWeb extends StatelessWidget {
                     ),
                   ),
                 ),
-            
+
                 /// RIGHT SIDE (Signup form in card)
                 Expanded(
                   flex: 1,
@@ -209,7 +212,9 @@ class SignUpScreenWeb extends StatelessWidget {
               style: GoogleFonts.poppins(color: Colors.white),
             ),
             GestureDetector(
-              onTap: () => Get.to(const LoginScreenWeb()),
+              onTap: () {
+                Get.to(LoginPage());
+              },
               child: Text(
                 "Login",
                 style: GoogleFonts.poppins(

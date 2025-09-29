@@ -174,77 +174,76 @@ class ForgotPasswordScreenWeb extends StatelessWidget {
       backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final isWeb = constraints.maxWidth > 600;
-
-          if (!isWeb) {
-            return const Center(child: Text("Mobile layout here"));
-          }
-
           return Form(
             key: _formkey,
-            child: Row(
-              children: [
-                /// LEFT SIDE (Image + tagline)
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/piza.png',
-                          fit: BoxFit.contain,
-                          width: constraints.maxWidth * 0.3,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "🍕 Lost Access?\nNo Worries!",
-                          style: GoogleFonts.poppins(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.deepOrange,
+            child: SingleChildScrollView(
+              child: Row(
+                children: [
+                  /// LEFT SIDE (Image + tagline)
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/piza.png',
+                            fit: BoxFit.contain,
+                            width: constraints.maxWidth * 0.3,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "We’ll help you reset your password\nso you can get back to delicious food fast.",
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey[700],
+
+                          Text(
+                            "🍕 Lost Access?\nNo Worries!",
+                            style: GoogleFonts.poppins(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepOrange,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              "We’ll help you reset your password\nso you can get back to delicious food fast.",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey[700],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                /// RIGHT SIDE (Form Card)
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: Center(
-                      child: Card(
-                        color: Colors.deepOrange,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                        elevation: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(36.0),
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 420),
-                            child: _buildForm(context, _formkey),
+                  /// RIGHT SIDE (Form Card)
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Center(
+                        child: Card(
+                          color: Colors.deepOrange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(36.0),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 420),
+                              child: _buildForm(context, _formkey),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

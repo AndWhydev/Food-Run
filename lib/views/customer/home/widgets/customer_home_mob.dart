@@ -384,4 +384,3 @@ class FoodCategoriesList extends StatelessWidget {
   }
 }
 
-// Enhanced Popular Foods List

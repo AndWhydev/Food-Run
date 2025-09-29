@@ -572,10 +572,14 @@
 // 2
 import 'package:flutter/material.dart';
 import 'package:foodhub/views/auth/forgot_password.dart';
+import 'package:foodhub/views/auth/layout%20decider/forgot_password_page.dart';
+import 'package:foodhub/views/auth/layout%20decider/home_page.dart';
+import 'package:foodhub/views/auth/layout%20decider/signup_page.dart';
 import 'package:foodhub/views/auth/signup.dart';
 import 'package:foodhub/views/auth/web/forget_password_web.dart';
 import 'package:foodhub/views/auth/web/signup_web.dart';
 import 'package:foodhub/views/customer/customer_navbar.dart';
+import 'package:foodhub/views/customer/web/customer_home_web.dart';
 import 'package:foodhub/widgets/custom_textformfield.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
@@ -720,14 +724,7 @@ class _LoginScreenState extends State<LoginScreen>
                     children: [
                       TextButton(
                         onPressed: () {
-                          final orientation = MediaQuery.of(
-                            context,
-                          ).orientation;
-                          if (orientation == Orientation.portrait) {
-                            Get.to(() => const ForgotPasswordScreen());
-                          } else {
-                            Get.to(() => const ForgotPasswordScreenWeb());
-                          }
+                         Get.to(ForgotPasswordPage());
                         },
                         child: Text(
                           "Forgot Password?",
@@ -754,8 +751,9 @@ class _LoginScreenState extends State<LoginScreen>
                         padding: EdgeInsets.symmetric(vertical: height * 0.018),
                         elevation: 4,
                       ),
+
                       onPressed: () {
-                        Get.to(CustomerNavBar());
+                      Get.to(HomePage());
                       },
                       child: Text(
                         "Login",
@@ -824,16 +822,9 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            final orientation = MediaQuery.of(
-                              context,
-                            ).orientation;
-                            if (orientation == Orientation.portrait) {
-                              Get.to(() => const SignUpScreen());
-                            } else {
-                              Get.to(() => const SignUpScreenWeb());
-                            }
-                          },
+                      onTap: () {
+                        Get.to(SignUpPage());
+                      },
                           child: Text(
                             "Sign up",
                             style: GoogleFonts.poppins(

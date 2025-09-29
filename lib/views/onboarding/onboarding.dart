@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodhub/views/auth/layout%20decider/signup_page.dart';
 import 'package:foodhub/views/auth/login.dart';
+import 'package:foodhub/views/auth/layout%20decider/login_page.dart';
 import 'package:foodhub/views/auth/signup.dart';
 import 'package:foodhub/views/auth/web/login_web.dart';
+import 'package:foodhub/views/auth/web/signup_web.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,15 +104,8 @@ class Onboarding extends StatelessWidget {
                             elevation: 6,
                           ),
                           onPressed: () {
-                            // Get.offAll(LoginScreen());
-                            Get.to(
-                              OrientationBuilder(
-                                builder: (context, orientation) =>
-                                    orientation == Orientation.portrait
-                                    ? LoginScreen()
-                                    : LoginScreenWeb(),
-                              ),
-                            );
+                            Get.offAll(LoginPage());
+                        
                           },
                           child: Text(
                             "Get Started",
@@ -175,7 +171,8 @@ class Onboarding extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(SignUpScreen());
+                              Get.to(SignUpPage());
+                          
                             },
                             child: Text(
                               "Sign up",

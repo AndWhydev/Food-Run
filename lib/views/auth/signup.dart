@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodhub/views/auth/layout%20decider/login_page.dart';
 import 'package:foodhub/views/auth/login.dart';
+import 'package:foodhub/views/auth/web/login_web.dart';
 import 'package:foodhub/widgets/custom_textformfield.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -228,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(LoginScreen());
+                            Get.to(LoginPage());
                           },
                           child: Text(
                             "Sign in",
