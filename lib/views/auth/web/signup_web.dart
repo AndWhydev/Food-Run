@@ -21,68 +21,70 @@ class SignUpScreenWeb extends StatelessWidget {
             return const Center(child: Text("Mobile layout here"));
           }
 
-          return Row(
-            children: [
-              /// LEFT SIDE (Food image + tagline)
-              Expanded(
-                flex: 1,
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/piza.png',
-                        fit: BoxFit.contain,
-                        width: constraints.maxWidth * 0.4,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "🍔 Taste the Best, Every Bite!",
-                        style: GoogleFonts.poppins(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepOrange,
+          return SingleChildScrollView(
+            child: Row(
+              children: [
+                /// LEFT SIDE (Food image + tagline)
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/piza.png',
+                          fit: BoxFit.contain,
+                          width: constraints.maxWidth * 0.4,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Join FoodHub today & explore\nfresh meals anytime, anywhere",
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey[700],
+                        const SizedBox(height: 20),
+                        Text(
+                          "🍔 Taste the Best, Every Bite!",
+                          style: GoogleFonts.poppins(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrange,
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          "Join FoodHub today & explore\nfresh meals anytime, anywhere",
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[700],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-
-              /// RIGHT SIDE (Signup form in card)
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: Center(
-                    child: Card(
-                      color: Colors.deepOrange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
-                      ),
-                      elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.all(36.0),
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 420),
-                          child: _buildForm(context),
+            
+                /// RIGHT SIDE (Signup form in card)
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Center(
+                      child: Card(
+                        color: Colors.deepOrange,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        elevation: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(36.0),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 420),
+                            child: _buildForm(context),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
