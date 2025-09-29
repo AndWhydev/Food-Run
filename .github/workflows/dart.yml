@@ -1,0 +1,53 @@
+name: Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master   # change to "master" if your default branch is master
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.3'   # set your Flutter version
+          channel: stable
+
+      # Get dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Build Flutter web with correct base-href for GitHub Pages
+      - name: Build Web
+        run: flutter build web --release --base-href "/foodhub/"
+
+      # Upload artifact (so deploy job can use it)
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
