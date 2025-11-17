@@ -507,39 +507,40 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
               // ),
 
               // 2
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: height * 0.018),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.deepOrange,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                  onPressed: authProvider.isLoading
-                      ? null
-                      : () => authProvider.signUp(
-                          name: nameController.text.trim(),
-                          email: emailController.text.trim(),
-                          phone: phoneController.text.trim(),
-                          password: passwordController.text.trim(),
-                          context: context,
-                        ),
-                  child: authProvider.isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Sign Up",
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                onPressed: authProvider.isLoading
+                    ? null
+                    : () => authProvider.signUp(
+                        name: nameController.text.trim(),
+                        email: emailController.text.trim(),
+                        phone: phoneController.text.trim(),
+                        password: passwordController.text.trim(),
+                        context: context,
+                      ),
+                child: authProvider.isLoading
+                    ? SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.deepOrange,
+                        ),
+                      )
+                    : Text(
+                        "Sign Up",
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
 
               // const SizedBox(height: 20),

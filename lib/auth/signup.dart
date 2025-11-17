@@ -34,33 +34,33 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    context.go('/ridersignup');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 10,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.rotationY(
-                            3.1416,
-                          ), // π radians = 180° flip
-                          child: const Icon(
-                            Icons.delivery_dining,
-                            size: 40,
-                            color: Colors.deepOrange,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     context.go('/ridersignup');
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //       vertical: 20,
+                //       horizontal: 10,
+                //     ),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.end,
+                //       children: [
+                //         Transform(
+                //           alignment: Alignment.center,
+                //           transform: Matrix4.rotationY(
+                //             3.1416,
+                //           ), // π radians = 180° flip
+                //           child: const Icon(
+                //             Icons.delivery_dining,
+                //             size: 40,
+                //             color: Colors.deepOrange,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 // SizedBox(height: height * 0.08),
                 Text(
                   "Sign Up",
