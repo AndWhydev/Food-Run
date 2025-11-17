@@ -1,12 +1,19 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:foodhub/firebase_options.dart';
+import 'package:foodhub/auth/providers/auth_provider.dart';
+import 'package:foodhub/routes/app_routes.dart';
 import 'package:foodhub/utils/theme.dart';
-import 'package:foodhub/views/onboarding/onboarding.dart';
+import 'package:provider/provider.dart';
 
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
+  runApp( MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => AuthProvider(),)
+  ],child:  MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,12 +21,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-
-      title: "FoodHub",
+      title: 'FoodHub',
       theme: AppTheme.lightTheme,
-      home: Onboarding(),
+      routerConfig: AppRouter.router,
     );
   }
 }

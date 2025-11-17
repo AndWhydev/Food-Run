@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/utils/responsive_page.dart';
-import 'package:foodhub/views/auth/forgot_password.dart';
-import 'package:foodhub/views/auth/web/forget_password_web.dart';
+import 'package:foodhub/auth/forgot_password.dart';
+import 'package:foodhub/auth/web/forget_password_web.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
@@ -9,7 +9,7 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsivePage(
-      portrait: const ForgotPasswordScreen(), // mobile/portrait version
+      portrait: ForgotPasswordScreen(), // mobile/portrait version
       landscape: const ForgotPasswordScreenWeb(), // web/landscape version
     );
   }

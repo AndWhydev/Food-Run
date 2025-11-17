@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodhub/views/auth/forgot_password.dart';
-import 'package:foodhub/views/auth/layout%20decider/forgot_password_page.dart';
-import 'package:foodhub/views/auth/layout%20decider/home_page.dart';
-import 'package:foodhub/views/auth/layout%20decider/signup_page.dart';
-import 'package:foodhub/views/auth/login.dart';
-import 'package:foodhub/views/auth/signup.dart';
-import 'package:foodhub/views/auth/web/forget_password_web.dart';
-import 'package:foodhub/views/auth/web/signup_web.dart';
-import 'package:foodhub/views/customer/customer_navbar.dart';
-import 'package:foodhub/views/customer/web/customer_home_web.dart';
+import 'package:foodhub/auth/layout%20decider/home_page.dart';
 import 'package:foodhub/widgets/custom_textformfield.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreenWeb extends StatelessWidget {
@@ -22,12 +14,6 @@ class LoginScreenWeb extends StatelessWidget {
       backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final isWeb = constraints.maxWidth > 600;
-
-          if (!isWeb) {
-            return LoginScreen();
-          }
-
           return SingleChildScrollView(
             child: Row(
               children: [
@@ -42,7 +28,7 @@ class LoginScreenWeb extends StatelessWidget {
                         Image.asset(
                           'assets/images/piza.png',
                           fit: BoxFit.contain,
-                          width: constraints.maxWidth * 0.4,
+                          width: constraints.maxWidth * 0.3,
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -104,6 +90,7 @@ class LoginScreenWeb extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "Welcome Back 👋",
@@ -145,7 +132,7 @@ class LoginScreenWeb extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: TextButton(
             onPressed: () {
-              Get.to(ForgotPasswordPage());
+              context.go('/forget');
             },
             child: Text(
               "Forgot Password?",
@@ -157,6 +144,7 @@ class LoginScreenWeb extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 10),
 
         /// Login Button
         ElevatedButton(
@@ -183,32 +171,31 @@ class LoginScreenWeb extends StatelessWidget {
         const SizedBox(height: 20),
 
         /// Divider with text
-        Row(
-          children: [
-            const Expanded(child: Divider(color: Colors.white70)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                "or sign in with",
-                style: GoogleFonts.poppins(color: Colors.white),
-              ),
-            ),
-            const Expanded(child: Divider(color: Colors.white70)),
-          ],
-        ),
-        const SizedBox(height: 20),
+        // Row(
+        //   children: [
+        //     const Expanded(child: Divider(color: Colors.white70)),
+        //     Padding(
+        //       padding: const EdgeInsets.symmetric(horizontal: 12),
+        //       child: Text(
+        //         "or sign in with",
+        //         style: GoogleFonts.poppins(color: Colors.white),
+        //       ),
+        //     ),
+        //     const Expanded(child: Divider(color: Colors.white70)),
+        //   ],
+        // ),
+        // const SizedBox(height: 20),
 
-        /// Social buttons
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _socialButton('assets/icons/google.png'),
-            const SizedBox(width: 20),
-            _socialButton('assets/icons/apple.png'),
-          ],
-        ),
-
-        const SizedBox(height: 20),
+        // /// Social buttons
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     _socialButton('assets/icons/google.png'),
+        //     // const SizedBox(width: 20),
+        //     // _socialButton('assets/icons/apple.png'),
+        //   ],
+        // ),
+        // const SizedBox(height: 20),
 
         /// Sign up row
         Row(
@@ -220,7 +207,7 @@ class LoginScreenWeb extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(SignUpPage());
+                context.go('/signup');
               },
               child: Text(
                 "Sign up",

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "203614101967",
+    "project_id": "foodhub-a1ec1",
+    "storage_bucket": "foodhub-a1ec1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203614101967:android:bd9a87f7c873b72bee72ba",
+        "android_client_info": {
+          "package_name": "com.foodhub.foodhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203614101967-onbf1mknvajvo6bob9f1fcjiboiu9mqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodhub.foodhub",
+            "certificate_hash": "d01ab05e310cec79e4a520102f836212d7a620b3"
+          }
+        },
+        {
+          "client_id": "203614101967-sdn9q0baps1k70hf6tkg00r66bnf66l8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ch2__zgMVSS8MoNNBHQm8VpL25NJJ18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203614101967-sdn9q0baps1k70hf6tkg00r66bnf66l8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "203614101967-hel9a5rlamvsbmqftga87474b2gk5q3i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foodhub.foodhub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

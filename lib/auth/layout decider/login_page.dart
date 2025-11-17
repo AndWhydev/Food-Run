@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/utils/responsive_page.dart';
-import 'package:foodhub/views/auth/login.dart';
-import 'package:foodhub/views/auth/web/login_web.dart';
+import 'package:foodhub/auth/login.dart';
+import 'package:foodhub/auth/web/login_web.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

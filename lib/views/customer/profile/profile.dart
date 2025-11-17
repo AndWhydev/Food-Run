@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodhub/views/onboarding/onboarding.dart';
+import 'package:get/get.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -91,7 +93,12 @@ class UserProfileScreen extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.logout,
             title: 'Logout',
-            onTap: () {},
+            onTap: () {
+              Get.offUntil(
+                MaterialPageRoute(builder: (_) => const Onboarding()),
+                (route) => false,
+              );
+            },
             textColor: Colors.red,
           ),
         ],

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/controllers/nav_controller.dart';
-import 'package:foodhub/views/admin/Admin%20Home/admin_home.dart';
+import 'package:foodhub/views/rider/pages/deliveries.dart';
+import 'package:foodhub/views/rider/pages/earnings.dart';
+import 'package:foodhub/views/rider/pages/rider_home_screen.dart';
+import 'package:foodhub/views/rider/pages/profile.dart';
 import 'package:get/get.dart';
 
-class AdminNavBar extends StatelessWidget {
-  AdminNavBar({super.key});
+class RiderNavBar extends StatelessWidget {
+  RiderNavBar({super.key});
 
   final NavController navController = Get.put(NavController());
 
   final List<Widget> _pages = [
-    AdminHomeScreen(),
-    AdminHomeScreen(),
-    AdminHomeScreen(),
+    RiderHomeScreen(),
+    DeliveriesHistoryScreen(),
+    EarningsScreen(),
+    ProfileScreen(),
   ];
 
   Widget _buildNavItem({
@@ -119,16 +123,23 @@ class AdminNavBar extends StatelessWidget {
                     ),
                     _buildNavItem(
                       icon: Icons.shopping_cart,
-                      label: "Search",
+                      label: "Deliveries",
                       index: 1,
                       selectedIndex: selectedIndex,
                       context: context,
                     ),
 
                     _buildNavItem(
+                      icon: Icons.attach_money,
+                      label: "Earnings",
+                      index: 2,
+                      selectedIndex: selectedIndex,
+                      context: context,
+                    ),
+                    _buildNavItem(
                       icon: Icons.person,
                       label: "Profile",
-                      index: 2,
+                      index: 3,
                       selectedIndex: selectedIndex,
                       context: context,
                     ),
