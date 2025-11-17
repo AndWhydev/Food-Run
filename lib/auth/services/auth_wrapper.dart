@@ -22,7 +22,11 @@ class AuthWrapper extends StatelessWidget {
         if (!authSnapshot.hasData || authSnapshot.data == null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (context.mounted) {
-              context.go('/onboarding');
+              if (kIsWeb) {
+                context.go('/login');
+              } else {
+                context.go('/onboarding');
+              }
             }
           });
           return const _LoadingScreen();
