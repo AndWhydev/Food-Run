@@ -2,6 +2,7 @@
 // import 'package:foodhub/models/order_model.dart';
 // import 'package:foodhub/models/user_model.dart';
 // import 'package:foodhub/providers/admin_provider.dart';
+// import 'package:foodhub/views/customer/home/widgets/create_order.dart';
 // import 'package:foodhub/views/customer/home/widgets/order_card.dart';
 // import 'package:foodhub/views/customer/home/widgets/rider_tile.dart';
 // import 'package:provider/provider.dart';
@@ -33,29 +34,42 @@
 //       ]),
 //       builder: (context, AsyncSnapshot<List<int>> snap) {
 //         final values = snap.data ?? [0, 0, 0, 0];
-//         return Row(
+//         return Column(
 //           children: [
-//             _smallCard('New', values[0], Colors.orange, Icons.fiber_new),
-//             SizedBox(width: 12),
-//             _smallCard(
-//               'Assigned',
-//               values[1],
-//               Colors.blue,
-//               Icons.assignment_ind,
+//             Row(
+//               children: [
+//                 _smallCard(
+//                   'New',
+//                   values[0],
+//                   Colors.orange.shade600,
+//                   Icons.fiber_new,
+//                 ),
+//                 SizedBox(width: 10),
+//                 _smallCard(
+//                   'Assigned',
+//                   values[1],
+//                   Colors.deepOrange.shade700,
+//                   Icons.assignment_ind,
+//                 ),
+//               ],
 //             ),
-//             SizedBox(width: 12),
-//             _smallCard(
-//               'Active',
-//               values[2],
-//               Colors.purple,
-//               Icons.local_shipping,
-//             ),
-//             SizedBox(width: 12),
-//             _smallCard(
-//               'Completed',
-//               values[3],
-//               Colors.green,
-//               Icons.check_circle,
+//             SizedBox(height: 10),
+//             Row(
+//               children: [
+//                 _smallCard(
+//                   'Active',
+//                   values[2],
+//                   Colors.deepOrange.shade500,
+//                   Icons.local_shipping,
+//                 ),
+//                 SizedBox(width: 10),
+//                 _smallCard(
+//                   'Completed',
+//                   values[3],
+//                   Colors.green.shade600,
+//                   Icons.check_circle,
+//                 ),
+//               ],
 //             ),
 //           ],
 //         );
@@ -66,43 +80,52 @@
 //   Widget _smallCard(String title, int count, Color color, IconData icon) {
 //     return Expanded(
 //       child: Container(
+//         height: 110,
 //         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             colors: [color.withOpacity(0.7), color],
-//             begin: Alignment.topLeft,
-//             end: Alignment.bottomRight,
-//           ),
+//           color: Colors.white,
 //           borderRadius: BorderRadius.circular(16),
 //           boxShadow: [
 //             BoxShadow(
-//               color: color.withOpacity(0.3),
-//               blurRadius: 8,
+//               color: color.withOpacity(0.15),
+//               blurRadius: 10,
 //               offset: Offset(0, 4),
 //             ),
 //           ],
+//           border: Border.all(color: color.withOpacity(0.2), width: 1.5),
 //         ),
 //         child: Padding(
 //           padding: const EdgeInsets.all(16.0),
 //           child: Column(
 //             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //             children: [
-//               Icon(icon, color: Colors.white, size: 28),
-//               SizedBox(height: 12),
-//               Text(
-//                 count.toString(),
-//                 style: TextStyle(
-//                   fontSize: 24,
-//                   fontWeight: FontWeight.bold,
-//                   color: Colors.white,
-//                 ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Container(
+//                     padding: EdgeInsets.all(8),
+//                     decoration: BoxDecoration(
+//                       color: color.withOpacity(0.1),
+//                       borderRadius: BorderRadius.circular(10),
+//                     ),
+//                     child: Icon(icon, color: color, size: 24),
+//                   ),
+//                   Text(
+//                     count.toString(),
+//                     style: TextStyle(
+//                       fontSize: 28,
+//                       fontWeight: FontWeight.bold,
+//                       color: color,
+//                     ),
+//                   ),
+//                 ],
 //               ),
-//               SizedBox(height: 4),
 //               Text(
 //                 title,
 //                 style: TextStyle(
-//                   fontSize: 12,
-//                   color: Colors.white.withOpacity(0.9),
-//                   fontWeight: FontWeight.w500,
+//                   fontSize: 14,
+//                   color: Colors.grey[700],
+//                   fontWeight: FontWeight.w600,
 //                 ),
 //               ),
 //             ],
@@ -170,6 +193,7 @@
 //                         ScaffoldMessenger.of(context).showSnackBar(
 //                           SnackBar(
 //                             content: Text('Assigned ${r.name}'),
+//                             backgroundColor: Colors.deepOrange,
 //                             behavior: SnackBarBehavior.floating,
 //                             shape: RoundedRectangleBorder(
 //                               borderRadius: BorderRadius.circular(10),
@@ -205,15 +229,18 @@
 //         if (!snap.hasData)
 //           return Container(
 //             height: 120,
-//             child: Center(child: CircularProgressIndicator()),
+//             child: Center(
+//               child: CircularProgressIndicator(color: Colors.deepOrange),
+//             ),
 //           );
 //         final riders = snap.data!;
 //         if (riders.isEmpty)
 //           return Container(
 //             height: 120,
 //             decoration: BoxDecoration(
-//               color: Colors.grey[100],
+//               color: Colors.grey[50],
 //               borderRadius: BorderRadius.circular(12),
+//               border: Border.all(color: Colors.grey[200]!),
 //             ),
 //             child: Center(
 //               child: Column(
@@ -292,7 +319,10 @@
 //                     actions: [
 //                       TextButton(
 //                         onPressed: () => Navigator.pop(context),
-//                         child: Text('Close'),
+//                         child: Text(
+//                           'Close',
+//                           style: TextStyle(color: Colors.deepOrange),
+//                         ),
 //                       ),
 //                     ],
 //                   ),
@@ -303,10 +333,10 @@
 //                 decoration: BoxDecoration(
 //                   color: Colors.white,
 //                   borderRadius: BorderRadius.circular(12),
-//                   border: Border.all(color: Colors.grey[200]!),
+//                   border: Border.all(color: Colors.deepOrange.withOpacity(0.2)),
 //                   boxShadow: [
 //                     BoxShadow(
-//                       color: Colors.black.withOpacity(0.05),
+//                       color: Colors.deepOrange.withOpacity(0.08),
 //                       blurRadius: 8,
 //                       offset: Offset(0, 2),
 //                     ),
@@ -319,11 +349,16 @@
 //                       children: [
 //                         CircleAvatar(
 //                           radius: 30,
+//                           backgroundColor: Colors.deepOrange.shade50,
 //                           backgroundImage: riders[i].profileImage != null
 //                               ? NetworkImage(riders[i].profileImage!)
 //                               : null,
 //                           child: riders[i].profileImage == null
-//                               ? Icon(Icons.person, size: 30)
+//                               ? Icon(
+//                                   Icons.person,
+//                                   size: 30,
+//                                   color: Colors.deepOrange,
+//                                 )
 //                               : null,
 //                         ),
 //                         Positioned(
@@ -368,27 +403,27 @@
 //   Widget build(BuildContext context) {
 //     final ordersStream = adminProvider.listenOrders();
 //     return Scaffold(
-//       backgroundColor: Colors.grey[50],
+//       backgroundColor: Colors.white,
 //       appBar: AppBar(
 //         elevation: 0,
-//         backgroundColor: Colors.white,
+//         backgroundColor: Colors.deepOrange,
 //         title: Text(
-//           'Admin Dashboard',
+//           'FoodHub (Admin)',
 //           style: TextStyle(
-//             color: Colors.black87,
+//             color: Colors.white,
 //             fontWeight: FontWeight.bold,
 //             fontSize: 22,
 //           ),
 //         ),
 //         actions: [
 //           Container(
-//             margin: EdgeInsets.only(right: 8),
+//             margin: EdgeInsets.only(right: 12),
 //             child: IconButton(
-//               onPressed: _showAddOrderDialog,
+//               onPressed: _navigateToCreateOrder,
 //               icon: Container(
 //                 padding: EdgeInsets.all(8),
 //                 decoration: BoxDecoration(
-//                   color: Colors.blue,
+//                   color: Colors.white.withOpacity(0.2),
 //                   shape: BoxShape.circle,
 //                 ),
 //                 child: Icon(Icons.add, color: Colors.white, size: 20),
@@ -407,7 +442,7 @@
 //               SizedBox(height: 24),
 //               Row(
 //                 children: [
-//                   Icon(Icons.motorcycle, color: Colors.blue, size: 22),
+//                   Icon(Icons.motorcycle, color: Colors.deepOrange, size: 22),
 //                   SizedBox(width: 8),
 //                   Text(
 //                     'Nearby Riders',
@@ -424,7 +459,7 @@
 //               SizedBox(height: 24),
 //               Row(
 //                 children: [
-//                   Icon(Icons.receipt_long, color: Colors.blue, size: 22),
+//                   Icon(Icons.receipt_long, color: Colors.deepOrange, size: 22),
 //                   SizedBox(width: 8),
 //                   Text(
 //                     'Live Orders',
@@ -444,8 +479,9 @@
 //                     return Container(
 //                       height: 200,
 //                       decoration: BoxDecoration(
-//                         color: Colors.white,
+//                         color: Colors.grey[50],
 //                         borderRadius: BorderRadius.circular(12),
+//                         border: Border.all(color: Colors.grey[200]!),
 //                       ),
 //                       child: Center(
 //                         child: Column(
@@ -465,15 +501,20 @@
 //                   if (!snapshot.hasData)
 //                     return Container(
 //                       height: 200,
-//                       child: Center(child: CircularProgressIndicator()),
+//                       child: Center(
+//                         child: CircularProgressIndicator(
+//                           color: Colors.deepOrange,
+//                         ),
+//                       ),
 //                     );
 //                   final orders = snapshot.data!;
 //                   if (orders.isEmpty)
 //                     return Container(
 //                       height: 200,
 //                       decoration: BoxDecoration(
-//                         color: Colors.white,
+//                         color: Colors.grey[50],
 //                         borderRadius: BorderRadius.circular(12),
+//                         border: Border.all(color: Colors.grey[200]!),
 //                       ),
 //                       child: Center(
 //                         child: Column(
@@ -572,14 +613,28 @@
 //                                                 );
 //                                             return ListTile(
 //                                               leading: CircleAvatar(
-//                                                 child: Icon(Icons.person),
+//                                                 backgroundColor:
+//                                                     Colors.deepOrange.shade50,
+//                                                 child: Icon(
+//                                                   Icons.person,
+//                                                   color: Colors.deepOrange,
+//                                                 ),
 //                                               ),
-//                                               title: Text('Rider: $riderId'),
+//                                               // title: Text('Rider: $riderId'),
+//                                               title: Text(
+//                                                 'Rider: ${riders.firstWhere(
+//                                                   (r) => r.uid == riderId,
+//                                                   // orElse: () => UserModel(uid: riderId, name: 'Unknown Rider'), // fallback
+//                                                 ).name}',
+//                                               ),
 //                                               subtitle: Text(
 //                                                 'Amount: \$${map['amount']}',
 //                                               ),
 //                                               trailing: ElevatedButton(
 //                                                 style: ElevatedButton.styleFrom(
+//                                                   backgroundColor:
+//                                                       Colors.deepOrange,
+//                                                   foregroundColor: Colors.white,
 //                                                   shape: RoundedRectangleBorder(
 //                                                     borderRadius:
 //                                                         BorderRadius.circular(
@@ -632,7 +687,7 @@
 //                                     children: [
 //                                       Icon(
 //                                         Icons.location_on,
-//                                         color: Colors.blue,
+//                                         color: Colors.deepOrange,
 //                                       ),
 //                                       SizedBox(width: 8),
 //                                       Text('Tracking'),
@@ -642,7 +697,12 @@
 //                                   actions: [
 //                                     TextButton(
 //                                       onPressed: () => Navigator.pop(context),
-//                                       child: Text('Close'),
+//                                       child: Text(
+//                                         'Close',
+//                                         style: TextStyle(
+//                                           color: Colors.deepOrange,
+//                                         ),
+//                                       ),
 //                                     ),
 //                                   ],
 //                                 ),
@@ -655,151 +715,18 @@
 //                   );
 //                 },
 //               ),
-//               SizedBox(height: 80),
+//               SizedBox(height: 100),
 //             ],
 //           ),
 //         ),
-//       ),
-//       floatingActionButton: FloatingActionButton.extended(
-//         onPressed: _showAddOrderDialog,
-//         icon: Icon(Icons.add),
-//         label: Text('New Order'),
-//         backgroundColor: Colors.blue,
-//         elevation: 4,
 //       ),
 //     );
 //   }
 
-//   void _showAddOrderDialog() {
-//     final _customerName = TextEditingController();
-//     final _customerPhone = TextEditingController();
-//     final _pickupAddr = TextEditingController();
-//     final _dropAddr = TextEditingController();
-//     final _amount = TextEditingController();
-
-//     showDialog(
-//       context: context,
-//       builder: (ctx) => AlertDialog(
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-//         title: Row(
-//           children: [
-//             Container(
-//               padding: EdgeInsets.all(8),
-//               decoration: BoxDecoration(
-//                 color: Colors.blue.withOpacity(0.1),
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//               child: Icon(Icons.add_shopping_cart, color: Colors.blue),
-//             ),
-//             SizedBox(width: 12),
-//             Text('Create Order'),
-//           ],
-//         ),
-//         content: SingleChildScrollView(
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               TextField(
-//                 controller: _customerName,
-//                 decoration: InputDecoration(
-//                   labelText: 'Customer name',
-//                   prefixIcon: Icon(Icons.person_outline),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[50],
-//                 ),
-//               ),
-//               SizedBox(height: 12),
-//               TextField(
-//                 controller: _customerPhone,
-//                 decoration: InputDecoration(
-//                   labelText: 'Customer phone',
-//                   prefixIcon: Icon(Icons.phone_outlined),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[50],
-//                 ),
-//               ),
-//               SizedBox(height: 12),
-//               TextField(
-//                 controller: _pickupAddr,
-//                 decoration: InputDecoration(
-//                   labelText: 'Pickup address',
-//                   prefixIcon: Icon(Icons.location_on_outlined),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[50],
-//                 ),
-//               ),
-//               SizedBox(height: 12),
-//               TextField(
-//                 controller: _dropAddr,
-//                 decoration: InputDecoration(
-//                   labelText: 'Dropoff address',
-//                   prefixIcon: Icon(Icons.flag_outlined),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[50],
-//                 ),
-//               ),
-//               SizedBox(height: 12),
-//               TextField(
-//                 controller: _amount,
-//                 decoration: InputDecoration(
-//                   labelText: 'Amount',
-//                   prefixIcon: Icon(Icons.attach_money),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[50],
-//                 ),
-//                 keyboardType: TextInputType.number,
-//               ),
-//             ],
-//           ),
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(ctx),
-//             child: Text('Cancel'),
-//           ),
-//           ElevatedButton(
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: Colors.blue,
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-//             ),
-//             onPressed: () async {
-//               final map = {
-//                 'customerName': _customerName.text,
-//                 'customerPhone': _customerPhone.text,
-//                 'pickupLocation': GeoPoint(0, 0),
-//                 'pickupAddress': _pickupAddr.text,
-//                 'dropoffLocation': GeoPoint(0, 0),
-//                 'dropoffAddress': _dropAddr.text,
-//                 'items': [],
-//                 'amount': double.tryParse(_amount.text) ?? 0,
-//                 'status': 'pending',
-//                 'createdAt': Timestamp.now(),
-//               };
-//               await adminProvider.createOrder(map);
-//               Navigator.pop(ctx);
-//             },
-//             child: Text('Create Order', style: TextStyle(color: Colors.white)),
-//           ),
-//         ],
-//       ),
+//   void _navigateToCreateOrder() {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(builder: (context) => CreateOrderScreen()),
 //     );
 //   }
 // }
@@ -829,6 +756,24 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   void initState() {
     super.initState();
     adminProvider = Provider.of<AdminProvider>(context, listen: false);
+  }
+
+  // Helper method to fetch rider by ID from Firestore
+  Future<UserModel?> _fetchRiderById(String riderId) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(riderId)
+          .get();
+
+      if (doc.exists && doc.data() != null) {
+        return UserModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+      }
+      return null;
+    } catch (e) {
+      print('Error fetching rider: $e');
+      return null;
+    }
   }
 
   Widget _statsRow() {
@@ -1354,6 +1299,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             onViewBids: () {
                               showModalBottomSheet(
                                 context: context,
+                                isScrollControlled: true,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20),
@@ -1384,101 +1330,265 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                         ),
                                       ),
                                     );
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(top: 12),
-                                        width: 40,
-                                        height: 4,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          borderRadius: BorderRadius.circular(
-                                            2,
+                                  return SafeArea(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: 12),
+                                          width: 40,
+                                          height: 4,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius: BorderRadius.circular(
+                                              2,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          'Bids Received',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Divider(height: 1),
-                                      Flexible(
-                                        child: ListView(
-                                          shrinkWrap: true,
-                                          children: bids.entries.map((e) {
-                                            final riderId = e.key;
-                                            final map =
-                                                Map<String, dynamic>.from(
-                                                  e.value,
-                                                );
-                                            return ListTile(
-                                              leading: CircleAvatar(
-                                                backgroundColor:
-                                                    Colors.deepOrange.shade50,
-                                                child: Icon(
-                                                  Icons.person,
-                                                  color: Colors.deepOrange,
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.gavel,
+                                                color: Colors.deepOrange,
+                                              ),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                'Bids Received',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              // title: Text('Rider: $riderId'),
-                                              title: Text(
-                                                'Rider: ${riders.firstWhere(
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(height: 1),
+                                        Flexible(
+                                          child: ListView(
+                                            shrinkWrap: true,
+                                            children: bids.entries.map((e) {
+                                              final riderId = e.key;
+                                              final map =
+                                                  Map<String, dynamic>.from(
+                                                    e.value,
+                                                  );
+
+                                              // Check if rider is in online riders list first
+                                              UserModel? onlineRider;
+                                              try {
+                                                onlineRider = riders.firstWhere(
                                                   (r) => r.uid == riderId,
-                                                  // orElse: () => UserModel(uid: riderId, name: 'Unknown Rider'), // fallback
-                                                ).name}',
-                                              ),
-                                              subtitle: Text(
-                                                'Amount: \$${map['amount']}',
-                                              ),
-                                              trailing: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.deepOrange,
-                                                  foregroundColor: Colors.white,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          8,
+                                                );
+                                              } catch (e) {
+                                                onlineRider = null;
+                                              }
+
+                                              return FutureBuilder<UserModel?>(
+                                                future: onlineRider != null
+                                                    ? Future.value(onlineRider)
+                                                    : _fetchRiderById(riderId),
+                                                builder: (context, riderSnap) {
+                                                  if (riderSnap
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundColor: Colors
+                                                            .deepOrange
+                                                            .shade50,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                              color: Colors
+                                                                  .deepOrange,
+                                                              strokeWidth: 2,
+                                                            ),
+                                                      ),
+                                                      title: Text('Loading...'),
+                                                      subtitle: Text(
+                                                        'Amount: \$${map['amount']}',
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  final rider = riderSnap.data;
+                                                  final riderName =
+                                                      rider?.name ??
+                                                      'Unknown Rider';
+                                                  final isOnline =
+                                                      onlineRider != null;
+
+                                                  return ListTile(
+                                                    leading: Stack(
+                                                      children: [
+                                                        CircleAvatar(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .deepOrange
+                                                                  .shade50,
+                                                          backgroundImage:
+                                                              rider?.profileImage !=
+                                                                  null
+                                                              ? NetworkImage(
+                                                                  rider!
+                                                                      .profileImage!,
+                                                                )
+                                                              : null,
+                                                          child:
+                                                              rider?.profileImage ==
+                                                                  null
+                                                              ? Icon(
+                                                                  Icons.person,
+                                                                  color: Colors
+                                                                      .deepOrange,
+                                                                )
+                                                              : null,
                                                         ),
-                                                  ),
-                                                ),
-                                                child: Text('Assign'),
-                                                onPressed: () async {
-                                                  Navigator.pop(context);
-                                                  final doc =
-                                                      await FirebaseFirestore
-                                                          .instance
-                                                          .collection('users')
-                                                          .doc(riderId)
-                                                          .get();
-                                                  final rider =
-                                                      UserModel.fromMap(
-                                                        doc.data()
-                                                            as Map<
-                                                              String,
-                                                              dynamic
-                                                            >,
-                                                        doc.id,
-                                                      );
-                                                  await adminProvider
-                                                      .assignRiderToOrder(
-                                                        orderId: order.id,
-                                                        rider: rider,
-                                                      );
+                                                        if (isOnline)
+                                                          Positioned(
+                                                            bottom: 0,
+                                                            right: 0,
+                                                            child: Container(
+                                                              width: 12,
+                                                              height: 12,
+                                                              decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .green,
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                border: Border.all(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 2,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                    title: Wrap(
+                                                      children: [
+                                                        Text(
+                                                          'Rider: $riderName',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        if (!isOnline) ...[
+                                                          SizedBox(width: 8),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.symmetric(
+                                                                  horizontal: 6,
+                                                                  vertical: 2,
+                                                                ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                  color: Colors
+                                                                      .grey[300],
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                        4,
+                                                                      ),
+                                                                ),
+                                                            child: Text(
+                                                              'Offline',
+                                                              style: TextStyle(
+                                                                fontSize: 10,
+                                                                color: Colors
+                                                                    .grey[700],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ],
+                                                    ),
+                                                    subtitle: Text(
+                                                      'Amount: \$${map['amount']}',
+                                                    ),
+                                                    trailing: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.deepOrange,
+                                                        foregroundColor:
+                                                            Colors.white,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                8,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      child: Text('Assign'),
+                                                      onPressed: rider == null
+                                                          ? null
+                                                          : () async {
+                                                              Navigator.pop(
+                                                                context,
+                                                              );
+                                                              try {
+                                                                await adminProvider
+                                                                    .assignRiderToOrder(
+                                                                      orderId:
+                                                                          order
+                                                                              .id,
+                                                                      rider:
+                                                                          rider,
+                                                                    );
+                                                                ScaffoldMessenger.of(
+                                                                  context,
+                                                                ).showSnackBar(
+                                                                  SnackBar(
+                                                                    content: Text(
+                                                                      'Assigned ${rider.name}',
+                                                                    ),
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .deepOrange,
+                                                                    behavior:
+                                                                        SnackBarBehavior
+                                                                            .floating,
+                                                                    shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                            10,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              } catch (e) {
+                                                                ScaffoldMessenger.of(
+                                                                  context,
+                                                                ).showSnackBar(
+                                                                  SnackBar(
+                                                                    content: Text(
+                                                                      'Failed to assign rider',
+                                                                    ),
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .red,
+                                                                    behavior:
+                                                                        SnackBarBehavior
+                                                                            .floating,
+                                                                    shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                            10,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                            },
+                                                    ),
+                                                  );
                                                 },
-                                              ),
-                                            );
-                                          }).toList(),
+                                              );
+                                            }).toList(),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   );
                                 },
                               );
