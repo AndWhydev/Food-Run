@@ -122,8 +122,6 @@
 //   }
 // }
 
-
-
 // 2
 import 'package:flutter/material.dart';
 import 'package:foodhub/widgets/custom_textformfield.dart';
@@ -206,39 +204,42 @@ class ForgotPasswordScreen extends StatelessWidget {
                 /// Reset Password Button
                 Consumer<AuthProvider>(
                   builder: (context, provider, _) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.deepOrange,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                    return SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepOrange,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        onPressed: provider.isLoading
+                            ? null
+                            : () {
+                                if (formKey.currentState!.validate()) {
+                                  final email = emailController.text.trim();
+                                  provider.resetPassword(email, context);
+                                }
+                              },
+                        child: provider.isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.deepOrange,
+                                ),
+                              )
+                            : Text(
+                                "Send Reset Link",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
-                      onPressed: provider.isLoading
-                          ? null
-                          : () {
-                              if (formKey.currentState!.validate()) {
-                                final email = emailController.text.trim();
-                                provider.resetPassword(email, context);
-                              }
-                            },
-                      child: provider.isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.deepOrange,
-                              ),
-                            )
-                          : Text(
-                              "Send Reset Link",
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                     );
                   },
                 ),
