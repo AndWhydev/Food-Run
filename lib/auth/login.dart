@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context,
                               );
 
-                              context.go('/auth');
+                              // context.go('/auth');
                             },
                       child: authProvider.isLoading
                           ? const SizedBox(

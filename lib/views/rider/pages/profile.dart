@@ -68,8 +68,11 @@
 
 // 2
 import 'package:flutter/material.dart';
+import 'package:foodhub/auth/providers/auth_provider.dart';
 import 'package:foodhub/views/onboarding/onboarding.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -172,11 +175,21 @@ class ProfileScreen extends StatelessWidget {
 
                     // Logout Button
                     OutlinedButton.icon(
-                      onPressed: () {
-                        Get.offUntil(
-                          MaterialPageRoute(builder: (_) => const Onboarding()),
-                          (route) => false,
-                        );
+                      // onPressed: () {
+                      //   // Get.offUntil(
+                      //   //   MaterialPageRoute(builder: (_) => const Onboarding()),
+                      //   //   (route) => false,
+                      //   // );
+                      // },
+                      onPressed: () async {
+                        final auth = context.read<AuthProvider>();
+
+                        await auth.logout(); // Firebase + Google sign-out
+
+                        // GoRouter navigation
+                        if (context.mounted) {
+                          context.go('/login');
+                        }
                       },
                       icon: const Icon(Icons.logout),
                       label: const Text("Logout"),

@@ -1,19 +1,27 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodhub/firebase_options.dart';
 import 'package:foodhub/auth/providers/auth_provider.dart';
+import 'package:foodhub/providers/admin_provider.dart';
 import 'package:foodhub/routes/app_routes.dart';
 import 'package:foodhub/utils/theme.dart';
+import 'package:foodhub/views/rider/provider/rider_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
-  runApp( MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => AuthProvider(),)
-  ],child:  MyApp()));
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => AdminProvider()),
+        ChangeNotifierProvider(create: (context) => RiderProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

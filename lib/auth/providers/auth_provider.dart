@@ -213,6 +213,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:foodhub/models/user_model.dart';
 import 'package:foodhub/widgets/custom_dialog.dart';
 import 'package:foodhub/widgets/error_custom_dialog.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart'; // Import the GoogleAuthDb
 
 class AuthProvider with ChangeNotifier {
@@ -316,6 +317,9 @@ class AuthProvider with ChangeNotifier {
         'online': true,
         'deviceType': getDeviceType(),
       });
+
+      //
+      context.go('/auth');
 
       ScaffoldMessenger.of(
         context,

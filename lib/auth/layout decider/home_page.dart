@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/views/customer/customer_navbar.dart';
+import 'package:foodhub/views/customer/home/widgets/customer_home_mob.dart';
 import 'package:foodhub/views/customer/web/customer_home_web.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,9 +11,9 @@ class HomePage extends StatelessWidget {
     return OrientationBuilder(
       builder: (context, orientation) {
         if (orientation == Orientation.portrait) {
-          return  CustomerNavBar();
+          return CustomerNavBar();
         } else {
-          return const CustomerHomeWeb();
+          return const AdminHomeScreen();
         }
       },
     );

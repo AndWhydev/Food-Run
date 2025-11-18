@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foodhub/auth/providers/auth_provider.dart';
 import 'package:foodhub/views/onboarding/onboarding.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -13,7 +16,7 @@ class UserProfileScreen extends StatelessWidget {
           children: [
             _buildProfileHeader(),
             const SizedBox(height: 20),
-            _buildMenuList(),
+            _buildMenuList(context),
           ],
         ),
       ),
@@ -59,7 +62,7 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuList() {
+  Widget _buildMenuList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -90,16 +93,31 @@ class UserProfileScreen extends StatelessWidget {
             title: 'Help & Support',
             onTap: () {},
           ),
+          // _buildMenuItem(
+          //   icon: Icons.logout,
+          //   title: 'Logout',
+          //   onTap: () {
+          //     // Get.offUntil(
+          //     //   MaterialPageRoute(builder: (_) => const Onboarding()),
+          //     //   (route) => false,
+          //     // );
+          //   },
+          //   textColor: Colors.red,
+          // ),
           _buildMenuItem(
             icon: Icons.logout,
             title: 'Logout',
-            onTap: () {
-              Get.offUntil(
-                MaterialPageRoute(builder: (_) => const Onboarding()),
-                (route) => false,
-              );
-            },
             textColor: Colors.red,
+            onTap: () async {
+              final auth = context.read<AuthProvider>();
+
+              await auth.logout(); // Firebase + Google sign-out
+
+              // GoRouter navigation
+              if (context.mounted) {
+                context.go('/login');
+              }
+            },
           ),
         ],
       ),

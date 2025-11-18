@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodhub/views/customer/home/widgets/customer_home_mob.dart';
+import 'package:foodhub/views/customer/home/widgets/food_categories_list.dart';
 import 'package:foodhub/views/customer/home/widgets/foods.dart';
 
 class CustomerHomeWeb extends StatefulWidget {
@@ -94,7 +94,7 @@ class _CustomerHomeWebState extends State<CustomerHomeWeb> {
 
                         const SizedBox(height: 16),
 
-                        const FoodCategoriesList(),
+                         FoodCategoriesList(),
 
                         const SizedBox(height: 32),
 

@@ -11,7 +11,7 @@ class CustomerNavBar extends StatelessWidget {
   final NavController navController = Get.put(NavController());
 
   final List<Widget> _pages = [
-    CustomerHomeMobileView(),
+    AdminHomeScreen(),
     AllOrdersPage(),
     UserProfileScreen(),
   ];
