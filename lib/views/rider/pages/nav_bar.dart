@@ -3,7 +3,7 @@ import 'package:foodhub/controllers/nav_controller.dart';
 import 'package:foodhub/views/rider/pages/deliveries.dart';
 import 'package:foodhub/views/rider/pages/earnings.dart';
 import 'package:foodhub/views/rider/pages/rider_home_screen.dart';
-import 'package:foodhub/views/rider/pages/profile.dart';
+import 'package:foodhub/views/rider/pages/profile/profile.dart';
 import 'package:get/get.dart';
 
 class RiderNavBar extends StatelessWidget {
@@ -13,7 +13,7 @@ class RiderNavBar extends StatelessWidget {
 
   final List<Widget> _pages = [
     RiderHomeScreen(),
-    DeliveriesHistoryScreen(),
+    DeliveriesScreen(),
     EarningsScreen(),
     ProfileScreen(),
   ];

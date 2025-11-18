@@ -67,7 +67,7 @@ class RiderProvider extends ChangeNotifier {
 
     return _firestore
         .collection('orders')
-        .where('riderId', isEqualTo: riderId)
+        .where('assignedRiderId', isEqualTo: riderId)
         .where('status', whereIn: ['assigned', 'inTransit'])
         .orderBy('createdAt', descending: true)
         .snapshots()
@@ -382,5 +382,43 @@ class RiderProvider extends ChangeNotifier {
       print('Error updating rider profile: $e');
       rethrow;
     }
+  }
+
+  //
+  // Listen to completed orders
+  Stream<List<OrderModel>> listenCompletedOrders() {
+    if (riderId.isEmpty) {
+      return Stream.value([]);
+    }
+
+    return _firestore
+        .collection('orders')
+        .where('riderId', isEqualTo: riderId)
+        .where('status', whereIn: ['delivered', 'cancelled'])
+        .orderBy('completedAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return OrderModel.fromDoc(doc);
+          }).toList();
+        });
+  }
+
+  // Listen to all rider's orders
+  Stream<List<OrderModel>> listenAllMyOrders() {
+    if (riderId.isEmpty) {
+      return Stream.value([]);
+    }
+
+    return _firestore
+        .collection('orders')
+        .where('riderId', isEqualTo: riderId)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return OrderModel.fromDoc(doc);
+          }).toList();
+        });
   }
 }

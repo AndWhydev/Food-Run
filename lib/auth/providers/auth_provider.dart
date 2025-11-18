@@ -1,207 +1,4 @@
-// import 'dart:io';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// // import 'package:firebase_messaging/firebase_messaging.dart'; // enable when ready
-// import 'package:foodhub/models/user_model.dart';
-// import 'package:foodhub/widgets/custom_dialog.dart';
-// import 'package:foodhub/widgets/error_custom_dialog.dart';
 
-// class AuthProvider with ChangeNotifier {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-//   bool _isLoading = false;
-//   bool get isLoading => _isLoading;
-
-//   void _setLoading(bool value) {
-//     _isLoading = value;
-//     notifyListeners();
-//   }
-
-//   /// Get Device Type Dynamically
-//   String getDeviceType() {
-//     if (kIsWeb) return "web";
-//     if (Platform.isAndroid) return "android";
-//     if (Platform.isIOS) return "ios";
-//     return "unknown";
-//   }
-
-//   /// SIGN UP
-//   Future<void> signUp({
-//     required String name,
-//     required String email,
-//     required String phone,
-//     required String password,
-//     required BuildContext context,
-//   }) async {
-//     try {
-//       _setLoading(true);
-
-//       // Create user in Firebase Auth
-//       UserCredential userCredential = await _auth
-//           .createUserWithEmailAndPassword(email: email, password: password);
-
-//       // Fetch FCM Token (optional)
-//       String? fcmToken;
-//       try {
-//         // fcmToken = await FirebaseMessaging.instance.getToken();
-//       } catch (_) {}
-
-//       // Create user model
-//       UserModel user = UserModel(
-//         uid: userCredential.user!.uid,
-//         name: name,
-//         email: email,
-//         phone: phone,
-//         role: UserRole.rider,
-//         profileImage: null,
-//         location: null,
-//         online: false,
-//         rating: 0,
-//         totalDeliveries: 0,
-//         fcmToken: fcmToken,
-//         deviceType: getDeviceType(),
-//         lastActive: Timestamp.now(),
-//         badgeCount: 0,
-//       );
-
-//       // Save to Firestore
-//       await _firestore.collection('users').doc(user.uid).set(user.toMap());
-
-//       showMyCustomDialog(
-//         context,
-//         title: "Sign Up",
-//         message: "Account Created Successfully",
-//         redirectPath: '/login',
-//       );
-//     } on FirebaseAuthException catch (e) {
-//       // showMyCustomDialog(
-//       //   context,
-//       //   title: "Signup failed",
-//       //   message: "${e.message}",
-//       //   redirectPath: '/login',
-//       // );
-//       showErrorDialog(context, title: "Signup failed", message: "${e.message}");
-//     } finally {
-//       _setLoading(false);
-//     }
-//   }
-
-//   /// LOGIN
-//   Future<void> login({
-//     required String email,
-//     required String password,
-//     required BuildContext context,
-//   }) async {
-//     try {
-//       _setLoading(true);
-
-//       UserCredential cred = await _auth.signInWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-
-//       // Optional: Refresh FCM token on login
-//       String? fcmToken;
-//       try {
-//         // fcmToken = await FirebaseMessaging.instance.getToken();
-//       } catch (_) {}
-
-//       // Update lastActive & fcmToken
-//       await _firestore.collection('users').doc(cred.user!.uid).update({
-//         'lastActive': Timestamp.now(),
-//         'fcmToken': fcmToken,
-//         'online': true,
-//         'deviceType': getDeviceType(),
-//       });
-
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(const SnackBar(content: Text("Login successful!")));
-//     } on FirebaseAuthException catch (e) {
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text(e.message ?? "Login failed")));
-//     } finally {
-//       _setLoading(false);
-//     }
-//   }
-
-//   /// RESET PASSWORD
-//   Future<void> resetPassword(String email, BuildContext context) async {
-//     try {
-//       await _auth.sendPasswordResetEmail(email: email);
-
-//       showMyCustomDialog(
-//         context,
-//         title: "Forgot Password",
-//         message: "Password Reset Email Sent Successfully",
-//         redirectPath: '/login',
-//       );
-//     } catch (e) {
-//       showMyCustomDialog(context, title: "Error", message: e.toString());
-//     }
-//   }
-
-//   /// CHANGE PASSWORD
-//   Future<void> changePassword(String newPassword, BuildContext context) async {
-//     try {
-//       await _auth.currentUser?.updatePassword(newPassword);
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text("Password updated successfully")),
-//       );
-//     } catch (e) {
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text("Error updating password: $e")));
-//     }
-//   }
-
-//   /// UPDATE PROFILE
-//   Future<void> updateProfile({
-//     required String name,
-//     String? phone,
-//     String? imageUrl,
-//     required BuildContext context,
-//   }) async {
-//     try {
-//       final uid = _auth.currentUser?.uid;
-//       if (uid == null) return;
-
-//       await _firestore.collection('users').doc(uid).update({
-//         'name': name,
-//         if (phone != null) 'phone': phone,
-//         if (imageUrl != null) 'profileImage': imageUrl,
-//       });
-
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text("Profile updated successfully")),
-//       );
-//     } catch (e) {
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text("Error updating profile: $e")));
-//     }
-//   }
-
-//   /// LOGOUT
-//   Future<void> logout() async {
-//     final uid = _auth.currentUser?.uid;
-
-//     if (uid != null) {
-//       await _firestore.collection('users').doc(uid).update({
-//         'online': false,
-//         'lastActive': Timestamp.now(),
-//       });
-//     }
-
-//     await _auth.signOut();
-//   }
-// }
-
-// 2
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -221,12 +18,33 @@ class AuthProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleAuthDb _googleAuthDb = GoogleAuthDb(); // Initialize GoogleAuthDb
 
+
+  //
+  UserModel? userModel;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+
+  //
+    // CALL THIS ON APP START
+  Future<void> loadUser() async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    //
+    final uid = user.uid;
+
+    final snap = await _firestore.collection("users").doc(user.uid).get();
+    if (snap.exists) {
+      // userModel = UserModel.fromMap(snap.data()!, );
+      userModel = UserModel.fromMap(snap.data()!, uid);
+      notifyListeners();
+    }
   }
 
   /// Get Device Type Dynamically

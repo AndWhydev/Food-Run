@@ -3,6 +3,9 @@ import 'package:foodhub/auth/layout%20decider/home_page.dart';
 import 'package:foodhub/auth/services/auth_wrapper.dart';
 import 'package:foodhub/views/onboarding/onboarding.dart';
 import 'package:foodhub/views/rider/pages/nav_bar.dart';
+import 'package:foodhub/views/rider/pages/profile/change_password.dart';
+import 'package:foodhub/views/rider/pages/profile/delete_account.dart';
+import 'package:foodhub/views/rider/pages/profile/edit_profile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:foodhub/auth/layout%20decider/forgot_password_page.dart';
 import 'package:foodhub/auth/layout%20decider/login_page.dart';
@@ -47,6 +50,25 @@ class AppRouter {
           final user = FirebaseAuth.instance.currentUser;
           return user == null ? '/login' : null;
         },
+      ),
+
+      ///
+      ///
+      ///
+      ///
+      GoRoute(
+        path: '/edit-profile',
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+
+      GoRoute(
+        path: '/change-password',
+        builder: (context, state) => const ChangePasswordScreen(),
+      ),
+
+      GoRoute(
+        path: '/delete-account',
+        builder: (context, state) => const DeleteAccountScreen(),
       ),
     ],
   );
