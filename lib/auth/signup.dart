@@ -61,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-                // SizedBox(height: height * 0.08),
+                SizedBox(height: height * 0.08),
                 Text(
                   "Sign Up",
                   style: GoogleFonts.poppins(
@@ -216,7 +216,7 @@ class SignUpScreen extends StatelessWidget {
                         context.go('/login');
                       },
                       child: Text(
-                        "Sign in",
+                        "Login",
                         style: GoogleFonts.poppins(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

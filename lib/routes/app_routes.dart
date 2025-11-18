@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:foodhub/auth/layout%20decider/home_page.dart';
 import 'package:foodhub/auth/services/auth_wrapper.dart';
 import 'package:foodhub/views/onboarding/onboarding.dart';
@@ -31,8 +32,22 @@ class AppRouter {
       ),
 
       // Home
-      GoRoute(path: '/home', builder: (context, state) => const HomePage()),
-      GoRoute(path: '/riderhome', builder: (context, state) => RiderNavBar()),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const HomePage(),
+        redirect: (context, state) {
+          final user = FirebaseAuth.instance.currentUser;
+          return user == null ? '/login' : null;
+        },
+      ),
+      GoRoute(
+        path: '/riderhome',
+        builder: (context, state) => RiderNavBar(),
+        redirect: (context, state) {
+          final user = FirebaseAuth.instance.currentUser;
+          return user == null ? '/login' : null;
+        },
+      ),
     ],
   );
 }

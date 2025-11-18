@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodhub/views/customer/home/widgets/order_page.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 // ---------------- PopularFoodsList ----------------
 class PopularFoodsList extends StatefulWidget {
@@ -59,7 +56,11 @@ class _PopularFoodsListState extends State<PopularFoodsList> {
         return GestureDetector(
           onTap: () {
             HapticFeedback.lightImpact();
-            Get.to(OrderPage(food: food));
+            // Get.to(OrderPage(food: food));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OrderPage(food: food)),
+            );
           },
           child: Card(
             color: Colors.white,
