@@ -36,7 +36,7 @@ class AdminProvider extends ChangeNotifier {
       final snapshot = await tx.get(orderRef);
       if (!snapshot.exists) throw Exception("Order not found");
       tx.update(orderRef, {
-        'assignedRiderId': rider.uid,
+        'riderId': rider.uid,
         'status': 'assigned',
         'assignedAt': Timestamp.now(),
       });

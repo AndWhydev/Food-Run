@@ -484,12 +484,27 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
     );
   }
 
+  // Stream<List<OrderModel>> _getOrdersStream(RiderProvider riderProvider) {
+  //   if (_selectedTab == 'active') {
+  //     return riderProvider.listenMyOrders();
+  //   } else if (_selectedTab == 'completed') {
+  //     return riderProvider.listenCompletedOrders();
+  //   } else {
+  //     return riderProvider.listenAllMyOrders();
+  //   }
+  // }
+
+  // 2
   Stream<List<OrderModel>> _getOrdersStream(RiderProvider riderProvider) {
+    print('_selectedTab = $_selectedTab');
     if (_selectedTab == 'active') {
+      print('Returning active orders stream');
       return riderProvider.listenMyOrders();
     } else if (_selectedTab == 'completed') {
+      print('Returning completed orders stream');
       return riderProvider.listenCompletedOrders();
     } else {
+      print('Returning all orders stream');
       return riderProvider.listenAllMyOrders();
     }
   }

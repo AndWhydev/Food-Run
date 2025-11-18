@@ -67,7 +67,7 @@ class RiderProvider extends ChangeNotifier {
 
     return _firestore
         .collection('orders')
-        .where('assignedRiderId', isEqualTo: riderId)
+        .where('riderId', isEqualTo: riderId)
         .where('status', whereIn: ['assigned', 'inTransit'])
         .orderBy('createdAt', descending: true)
         .snapshots()
