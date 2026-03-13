@@ -276,6 +276,23 @@ class SignUpScreenWeb extends StatefulWidget {
 }
 
 class _SignUpScreenWebState extends State<SignUpScreenWeb> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  bool _isGoogleSignUpLoading = false;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -360,15 +377,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   /// Signup Form
   Widget _buildForm(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final phoneController = TextEditingController();
-    final passwordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
     final authProvider = Provider.of<AuthProvider>(context);
-    final size = MediaQuery.of(context).size;
-
-    final height = size.height;
 
     return Consumer<AuthProvider>(
       builder: (context, provider, _) {
@@ -466,47 +475,6 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
               const SizedBox(height: 20),
 
               /// Signup Button
-              // ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.white,
-              //     foregroundColor: Colors.deepOrange,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(18),
-              //     ),
-              //     padding: const EdgeInsets.symmetric(vertical: 16),
-              //   ),
-              //   onPressed: provider.isLoading
-              //       ? null
-              //       : () {
-              //           if (formKey.currentState!.validate()) {
-              //             provider.signUp(
-              //               name: nameController.text.trim(),
-              //               email: emailController.text.trim(),
-              //               phone: phoneController.text.trim(),
-              //               password: passwordController.text.trim(),
-              //               context: context,
-              //             );
-              //           }
-              //         },
-              //   child: provider.isLoading
-              //       ? const SizedBox(
-              //           height: 20,
-              //           width: 20,
-              //           child: CircularProgressIndicator(
-              //             strokeWidth: 2,
-              //             color: Colors.deepOrange,
-              //           ),
-              //         )
-              //       : Text(
-              //           "Sign Up",
-              //           style: GoogleFonts.poppins(
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              // ),
-
-              // 2
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -516,15 +484,19 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                onPressed: authProvider.isLoading
+                onPressed: (authProvider.isLoading || _isGoogleSignUpLoading)
                     ? null
-                    : () => authProvider.signUp(
-                        name: nameController.text.trim(),
-                        email: emailController.text.trim(),
-                        phone: phoneController.text.trim(),
-                        password: passwordController.text.trim(),
-                        context: context,
-                      ),
+                    : () {
+                        if (formKey.currentState!.validate()) {
+                          authProvider.signUp(
+                            name: nameController.text.trim(),
+                            email: emailController.text.trim(),
+                            phone: phoneController.text.trim(),
+                            password: passwordController.text.trim(),
+                            context: context,
+                          );
+                        }
+                      },
                 child: authProvider.isLoading
                     ? SizedBox(
                         height: 20,
@@ -543,29 +515,42 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                       ),
               ),
 
-              // const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-              // /// Divider with text
-              // Row(
-              //   children: [
-              //     const Expanded(child: Divider(color: Colors.white70)),
-              //     Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 12),
-              //       child: Text(
-              //         "or sign up with",
-              //         style: GoogleFonts.poppins(color: Colors.white),
-              //       ),
-              //     ),
-              //     const Expanded(child: Divider(color: Colors.white70)),
-              //   ],
-              // ),
-              // const SizedBox(height: 20),
+              /// Divider with text
+              Row(
+                children: [
+                  const Expanded(child: Divider(color: Colors.white70)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      "or sign up with",
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ),
+                  ),
+                  const Expanded(child: Divider(color: Colors.white70)),
+                ],
+              ),
+              const SizedBox(height: 20),
 
-              // /// Social buttons
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [_socialButton('assets/icons/google.png')],
-              // ),
+              /// Social buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                   _isGoogleSignUpLoading
+                  ? const SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                    )
+                  : _socialButton('assets/icons/google.png', context),
+                ],
+              ),
               const SizedBox(height: 20),
 
               /// Already have account
@@ -601,7 +586,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   }
 
   /// Social Button
-  Widget _socialButton(String assetPath) {
+  Widget _socialButton(String assetPath, BuildContext context) {
     return Container(
       width: 50,
       height: 50,
@@ -611,12 +596,44 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(25),
-        onTap: () {},
+        onTap: () => _handleGoogleSignIn(context),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Image.asset(assetPath, fit: BoxFit.contain),
         ),
       ),
     );
+  }
+
+  Future<void> _handleGoogleSignIn(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    if (authProvider.isLoading || _isGoogleSignUpLoading) return;
+
+    setState(() => _isGoogleSignUpLoading = true);
+
+    try {
+      final userCred = await authProvider.signInWithGoogle(context);
+
+      if (userCred != null && userCred.user != null) {
+        if (mounted) {
+          context.go('/auth');
+        }
+      }
+    } catch (e) {
+      debugPrint('Google Sign-In Error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Google Sign-In failed: $e'),
+            backgroundColor: Colors.white,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isGoogleSignUpLoading = false);
+      }
+    }
   }
 }

@@ -471,51 +471,50 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              if (!kIsWeb)
-                Column(
-                  children: [
-                    const SizedBox(height: 32),
+              Column(
+                children: [
+                  const SizedBox(height: 32),
 
-                    /// Divider
-                    Row(
-                      children: [
-                        const Expanded(child: Divider(color: Colors.grey)),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            "or sign in with",
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500,
-                            ),
+                  /// Divider
+                  Row(
+                    children: [
+                      const Expanded(child: Divider(color: Colors.grey)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          "or sign in with",
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey.shade700,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const Expanded(child: Divider(color: Colors.grey)),
-                      ],
-                    ),
+                      ),
+                      const Expanded(child: Divider(color: Colors.grey)),
+                    ],
+                  ),
 
-                    const SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
-                    /// Social Buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _isGoogleLoginLoading
-                            ? const SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.deepOrange,
-                                  ),
+                  /// Social Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _isGoogleLoginLoading
+                          ? const SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.deepOrange,
                                 ),
-                              )
-                            : _socialButton("assets/icons/google.png", context),
-                      ],
-                    ),
-                  ],
-                ),
+                              ),
+                            )
+                          : _socialButton("assets/icons/google.png", context),
+                    ],
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 32),
 

@@ -7,8 +7,24 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreenWeb extends StatelessWidget {
+class LoginScreenWeb extends StatefulWidget {
   const LoginScreenWeb({super.key});
+
+  @override
+  State<LoginScreenWeb> createState() => _LoginScreenWebState();
+}
+
+class _LoginScreenWebState extends State<LoginScreenWeb> {
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  bool _isGoogleLoginLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +105,6 @@ class LoginScreenWeb extends StatelessWidget {
 
   /// Login Form
   Widget _buildForm(BuildContext context) {
-    final emailController = TextEditingController();
-    final passController = TextEditingController();
     final authProvider = Provider.of<AuthProvider>(context);
     return Consumer<AuthProvider>(
       builder: (context, provider, child) => Column(
@@ -162,7 +176,7 @@ class LoginScreenWeb extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),
-            onPressed: authProvider.isLoading
+            onPressed: (authProvider.isLoading || _isGoogleLoginLoading)
                 ? null
                 : () => authProvider.login(
                     email: emailController.text,
@@ -190,31 +204,40 @@ class LoginScreenWeb extends StatelessWidget {
           const SizedBox(height: 20),
 
           /// Divider with text
-          // Row(
-          //   children: [
-          //     const Expanded(child: Divider(color: Colors.white70)),
-          //     Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 12),
-          //       child: Text(
-          //         "or sign in with",
-          //         style: GoogleFonts.poppins(color: Colors.white),
-          //       ),
-          //     ),
-          //     const Expanded(child: Divider(color: Colors.white70)),
-          //   ],
-          // ),
-          // const SizedBox(height: 20),
+          Row(
+            children: [
+              const Expanded(child: Divider(color: Colors.white70)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  "or sign in with",
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
+              ),
+              const Expanded(child: Divider(color: Colors.white70)),
+            ],
+          ),
+          const SizedBox(height: 20),
 
-          // /// Social buttons
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     _socialButton('assets/icons/google.png'),
-          //     // const SizedBox(width: 20),
-          //     // _socialButton('assets/icons/apple.png'),
-          //   ],
-          // ),
-          // const SizedBox(height: 20),
+          /// Social buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _isGoogleLoginLoading
+                  ? const SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                    )
+                  : _socialButton('assets/icons/google.png', context),
+            ],
+          ),
+          const SizedBox(height: 20),
 
           /// Sign up row
           Row(
@@ -247,7 +270,7 @@ class LoginScreenWeb extends StatelessWidget {
   }
 
   /// Social Button
-  Widget _socialButton(String assetPath) {
+  Widget _socialButton(String assetPath, BuildContext context) {
     return Container(
       width: 50,
       height: 50,
@@ -257,12 +280,44 @@ class LoginScreenWeb extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(25),
-        onTap: () {},
+        onTap: () => _handleGoogleSignIn(context),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Image.asset(assetPath, fit: BoxFit.contain),
         ),
       ),
     );
+  }
+
+  Future<void> _handleGoogleSignIn(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    if (authProvider.isLoading || _isGoogleLoginLoading) return;
+
+    setState(() => _isGoogleLoginLoading = true);
+
+    try {
+      final userCred = await authProvider.signInWithGoogle(context);
+
+      if (userCred != null && userCred.user != null) {
+        if (mounted) {
+          context.go('/auth');
+        }
+      }
+    } catch (e) {
+      debugPrint('Google Sign-In Error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Google Sign-In failed: $e'),
+            backgroundColor: Colors.white,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isGoogleLoginLoading = false);
+      }
+    }
   }
 }

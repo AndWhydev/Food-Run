@@ -457,55 +457,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
 
-                if (!kIsWeb)
-                  Column(
-                    children: [
-                      SizedBox(height: height * 0.03),
+                Column(
+                  children: [
+                    SizedBox(height: height * 0.03),
 
-                      Row(
-                        children: [
-                          const Expanded(child: Divider(color: Colors.grey)),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.04,
-                            ),
-                            child: Text(
-                              "or continue with",
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey.shade700,
-                              ),
+                    Row(
+                      children: [
+                        const Expanded(child: Divider(color: Colors.grey)),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * 0.04,
+                          ),
+                          child: Text(
+                            "or continue with",
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade700,
                             ),
                           ),
-                          const Expanded(child: Divider(color: Colors.grey)),
-                        ],
-                      ),
+                        ),
+                        const Expanded(child: Divider(color: Colors.grey)),
+                      ],
+                    ),
 
-                      SizedBox(height: height * 0.02),
+                    SizedBox(height: height * 0.02),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _isGoogleSignUpLoading
-                              ? const SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.deepOrange,
-                                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _isGoogleSignUpLoading
+                            ? const SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.deepOrange,
                                   ),
-                                )
-                              : _socialButton(
-                                  "assets/icons/google.png",
-                                  context,
                                 ),
-                        ],
-                      ),
-                    ],
-                  ),
+                              )
+                            : _socialButton(
+                                "assets/icons/google.png",
+                                context,
+                              ),
+                      ],
+                    ),
+                  ],
+                ),
                 SizedBox(height: height * 0.03),
 
                 Row(
