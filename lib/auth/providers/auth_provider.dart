@@ -172,7 +172,7 @@ class AuthProvider with ChangeNotifier {
           .get();
       if (!userDoc.exists) {
         String? fcmToken;
-        if (kIsWeb) {
+        if (!kIsWeb) {
           fcmToken = await FirebaseMessaging.instance.getToken();
         }
 
@@ -198,12 +198,16 @@ class AuthProvider with ChangeNotifier {
             .set(newUser.toMap());
       } else {
         String? fcmToken;
-        await _firestore.collection('users').doc(userCred.user!.uid).update({
+        if (!kIsWeb) {
+          fcmToken = await FirebaseMessaging.instance.getToken();
+        }
+        final Map<String, dynamic> updateData = {
           'online': true,
           'lastActive': Timestamp.now(),
           'deviceType': getDeviceType(),
-          'fcmToken': fcmToken,
-        });
+        };
+        if (fcmToken != null) updateData['fcmToken'] = fcmToken;
+        await _firestore.collection('users').doc(userCred.user!.uid).update(updateData);
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
