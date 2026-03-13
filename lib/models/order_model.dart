@@ -24,7 +24,8 @@ class OrderModel {
   final OrderStatus status;
   final String? assignedRiderId;
   final Map<String, dynamic>? bids; // optional: riderId -> {amount, timestamp}
-  final DateTime createdAt; // 🔥 changed
+  final DateTime createdAt;
+  final DateTime? completedAt; // Added completedAt field
 
   OrderModel({
     required this.id,
@@ -40,6 +41,7 @@ class OrderModel {
     this.assignedRiderId,
     this.bids,
     required this.createdAt,
+    this.completedAt,
   });
 
   factory OrderModel.fromDoc(DocumentSnapshot doc) {
@@ -60,6 +62,7 @@ class OrderModel {
           ? Map<String, dynamic>.from(data['bids'])
           : null,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      completedAt: (data['completedAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -77,6 +80,7 @@ class OrderModel {
       'assignedRiderId': assignedRiderId,
       'bids': bids,
       'createdAt': Timestamp.fromDate(createdAt),
+      'completedAt': completedAt != null ? Timestamp.fromDate(completedAt!) : null,
     };
   }
 
