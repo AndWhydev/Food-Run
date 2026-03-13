@@ -65,39 +65,40 @@ class GoogleAuthDb {
 
   // Updated Google Sign-In method for v7+ supporting both web and mobile
   Future<UserCredential> signInWithGoogle() async {
+    if (kIsWeb) {
+      // WEB: Use Firebase's signInWithPopup which handles the OAuth flow natively.
+      // The google_sign_in plugin does NOT support authenticate() on web.
+      log('Web platform: Using signInWithPopup');
+      try {
+        final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+        final userCredential = await FirebaseAuth.instance.signInWithPopup(
+          googleProvider,
+        );
+        log('Successfully signed in via popup: ${userCredential.user?.email}');
+        return userCredential;
+      } catch (e) {
+        log('Google Sign-In Popup Error: $e');
+        rethrow;
+      }
+    }
+
+    // MOBILE (Android/iOS): Use google_sign_in plugin
     await ensureGoogleSignInInitialized();
 
     try {
       GoogleSignInAccount? account;
 
-      if (kIsWeb) {
-        // WEB: For web, authenticate() is not supported
-        // The user must have already signed in via renderButton()
-        // We just get the current account from our tracked state
-        log('Web platform: Getting current account or waiting for sign-in');
-
-        // Use the account from authentication events
-        account = _currentUser;
-
-        // If no current account, we need to throw an error
-        // because web requires using renderButton() for sign-in
-        if (account == null) {
-          throw Exception(
-            'No Google account found. Please use the Google Sign-In button to sign in first.',
-          );
-        }
+      if (_googleSignIn.supportsAuthenticate()) {
+        log('Using authenticate() method for mobile');
+        account = await _googleSignIn.authenticate(
+          scopeHint: userAuthenticationResult,
+        );
       } else {
-        // MOBILE: Use authenticate() for Android/iOS
-        if (_googleSignIn.supportsAuthenticate()) {
-          log('Using authenticate() method for mobile');
-          account = await _googleSignIn.authenticate(
-            scopeHint: userAuthenticationResult,
-          );
-        } else {
-          throw UnsupportedError(
-            'This platform does not support authentication',
-          );
-        }
+        throw UnsupportedError(
+          'This platform does not support authentication',
+        );
       }
 
       // Get authentication details - SYNCHRONOUS in v7+
