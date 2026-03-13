@@ -163,7 +163,7 @@ class _CustomerNavBarState extends State<CustomerNavBar> {
 
   final List<Widget> _pages = [
     AdminHomeScreen(),
-    AllOrdersPage(),
+    // AllOrdersPage(),
     UserProfileScreen(),
   ];
 
@@ -268,12 +268,12 @@ class _CustomerNavBarState extends State<CustomerNavBar> {
                     index: 0,
                     context: context,
                   ),
-                  _buildNavItem(
-                    icon: Icons.shopping_cart,
-                    label: "Search",
-                    index: 1,
-                    context: context,
-                  ),
+                  // _buildNavItem(
+                  //   icon: Icons.shopping_cart,
+                  //   label: "Orders",
+                  //   index: 1,
+                  //   context: context,
+                  // ),
                   _buildNavItem(
                     icon: Icons.person,
                     label: "Profile",
