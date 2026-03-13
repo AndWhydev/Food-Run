@@ -6,16 +6,21 @@ import 'package:foodhub/views/rider/pages/rider_home_screen.dart';
 import 'package:foodhub/views/rider/pages/profile/profile.dart';
 import 'package:get/get.dart';
 
-class RiderNavBar extends StatelessWidget {
-  RiderNavBar({super.key});
+class RiderNavBar extends StatefulWidget {
+  const RiderNavBar({super.key});
 
+  @override
+  State<RiderNavBar> createState() => _RiderNavBarState();
+}
+
+class _RiderNavBarState extends State<RiderNavBar> {
   final NavController navController = Get.put(NavController());
 
   final List<Widget> _pages = [
-    RiderHomeScreen(),
-    DeliveriesScreen(),
-    EarningsScreen(),
-    ProfileScreen(),
+    const RiderHomeScreen(),
+    const DeliveriesScreen(),
+    const EarningsScreen(),
+    const ProfileScreen(),
   ];
 
   Widget _buildNavItem({
@@ -87,8 +92,10 @@ class RiderNavBar extends StatelessWidget {
 
       return Scaffold(
         extendBody: true,
-        body: _pages[selectedIndex],
-
+        body: IndexedStack(
+          index: selectedIndex,
+          children: _pages,
+        ),
         bottomNavigationBar: SafeArea(
           top: false,
           child: Padding(
@@ -110,7 +117,7 @@ class RiderNavBar extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -128,7 +135,6 @@ class RiderNavBar extends StatelessWidget {
                       selectedIndex: selectedIndex,
                       context: context,
                     ),
-
                     _buildNavItem(
                       icon: Icons.attach_money,
                       label: "Earnings",
