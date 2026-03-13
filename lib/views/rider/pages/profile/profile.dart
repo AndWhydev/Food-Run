@@ -187,6 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -208,19 +209,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     bottomRight: Radius.circular(18),
                   ),
                 ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.person, color: Colors.white, size: 20),
-                    SizedBox(width: 8),
-                    Text(
-                      "Profile",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 40, left: 10),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.person, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        "Profile",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 
@@ -275,12 +279,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
 
                     // Dynamic Rider ID (based on UID)
-                    Text(
-                      user != null
-                          ? "Rider ID: #RDR-${user.uid.substring(0, 6).toUpperCase()}"
-                          : "Rider ID: ...",
-                      style: const TextStyle(color: Colors.grey),
-                    ),
+                    // Text(
+                    //   user != null
+                    //       ? "Rider ID: #RDR-${user.uid.substring(0, 6).toUpperCase()}"
+                    //       : "Rider ID: ...",
+                    //   style: const TextStyle(color: Colors.grey),
+                    // ),
                     const SizedBox(height: 20),
 
                     const Divider(),

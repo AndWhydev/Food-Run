@@ -13,7 +13,8 @@ class HomePage extends StatelessWidget {
         if (orientation == Orientation.portrait) {
           return CustomerNavBar();
         } else {
-          return const AdminHomeScreen();
+          // return const AdminHomeScreen();
+           return const CustomerNavBar();
         }
       },
     );

@@ -22,7 +22,7 @@ class OrderModel {
   final List<Map<String, dynamic>> items; // [{name, qty, price}]
   final double amount;
   final OrderStatus status;
-  final String? assignedRiderId;
+  final String? riderId;
   final Map<String, dynamic>? bids; // optional: riderId -> {amount, timestamp}
   final DateTime createdAt;
   final DateTime? completedAt; // Added completedAt field
@@ -38,7 +38,7 @@ class OrderModel {
     required this.items,
     required this.amount,
     required this.status,
-    this.assignedRiderId,
+    this.riderId,
     this.bids,
     required this.createdAt,
     this.completedAt,
@@ -57,7 +57,7 @@ class OrderModel {
       items: List<Map<String, dynamic>>.from(data['items'] ?? []),
       amount: (data['amount'] ?? 0).toDouble(),
       status: _statusFromString(data['status'] ?? 'pending'),
-      assignedRiderId: data['assignedRiderId'],
+      riderId: data['riderId'],
       bids: data['bids'] != null
           ? Map<String, dynamic>.from(data['bids'])
           : null,
@@ -77,7 +77,7 @@ class OrderModel {
       'items': items,
       'amount': amount,
       'status': status.name,
-      'assignedRiderId': assignedRiderId,
+      'riderId': riderId,
       'bids': bids,
       'createdAt': Timestamp.fromDate(createdAt),
       'completedAt': completedAt != null ? Timestamp.fromDate(completedAt!) : null,

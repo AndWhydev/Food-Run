@@ -755,7 +755,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   void initState() {
     super.initState();
-    adminProvider = Provider.of<AdminProvider>(context, listen: false);
   }
 
   // Helper method to fetch rider by ID from Firestore
@@ -1153,6 +1152,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    adminProvider = Provider.of<AdminProvider>(context);
     final ordersStream = adminProvider.listenOrders();
     return Scaffold(
       backgroundColor: Colors.white,

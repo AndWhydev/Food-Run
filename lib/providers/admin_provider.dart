@@ -41,14 +41,16 @@ class AdminProvider extends ChangeNotifier {
         'assignedAt': Timestamp.now(),
       });
     });
+    notifyListeners();
   }
 
   Future<void> unassignRider({required String orderId}) async {
     final orderRef = _firestore.collection('orders').doc(orderId);
     await orderRef.update({
-      'assignedRiderId': FieldValue.delete(),
+      'riderId': FieldValue.delete(),
       'status': 'pending',
     });
+    notifyListeners();
   }
 
   Future<void> updateOrderStatus({
@@ -58,6 +60,7 @@ class AdminProvider extends ChangeNotifier {
     await _firestore.collection('orders').doc(orderId).update({
       'status': status,
     });
+    notifyListeners();
   }
 
   // quick stat queries

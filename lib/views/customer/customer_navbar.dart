@@ -148,8 +148,7 @@
 // 2
 import 'package:flutter/material.dart';
 import 'package:foodhub/views/customer/home/widgets/customer_home_mob.dart';
-import 'package:foodhub/views/customer/orders/all_orders.dart';
-import 'package:foodhub/views/customer/profile/profile.dart';
+import 'package:foodhub/views/rider/pages/profile/profile.dart';
 
 class CustomerNavBar extends StatefulWidget {
   const CustomerNavBar({super.key});
@@ -164,7 +163,7 @@ class _CustomerNavBarState extends State<CustomerNavBar> {
   final List<Widget> _pages = [
     AdminHomeScreen(),
     // AllOrdersPage(),
-    UserProfileScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -277,7 +276,7 @@ class _CustomerNavBarState extends State<CustomerNavBar> {
                   _buildNavItem(
                     icon: Icons.person,
                     label: "Profile",
-                    index: 2,
+                    index: 1,
                     context: context,
                   ),
                 ],
