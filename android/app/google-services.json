@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "203614101967-onbf1mknvajvo6bob9f1fcjiboiu9mqg.apps.googleusercontent.com",
+          "client_id": "203614101967-8fm32dvuld2krmd3jef60cdj6hha4t32.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.foodhub.foodhub",
-            "certificate_hash": "d01ab05e310cec79e4a520102f836212d7a620b3"
+            "certificate_hash": "e1fc39cce33d9764400bd09369cab92ded7f1f60"
           }
         },
         {

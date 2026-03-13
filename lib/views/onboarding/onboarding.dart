@@ -391,7 +391,7 @@ class Onboarding extends StatelessWidget {
       if (context.mounted &&
           userCredential != null &&
           userCredential.user != null) {
-        context.go('/home');
+        context.go('/auth');
       }
     } catch (e) {
       debugPrint('Google Sign-In Error: $e');

@@ -17,7 +17,8 @@ class GoogleAuthDb {
     try {
       // Initialize is required in v7+
       await _googleSignIn.initialize(
-        // clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com', // Optional for web
+       clientId:
+            '203614101967-sdn9q0baps1k70hf6tkg00r66bnf66l8.apps.googleusercontent.com',
         // serverClientId: 'YOUR_SERVER_CLIENT_ID', // Optional for server auth
       );
       _isGoogleSignInInitialized = true;

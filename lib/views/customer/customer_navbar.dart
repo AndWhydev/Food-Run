@@ -236,7 +236,10 @@ class _CustomerNavBarState extends State<CustomerNavBar> {
 
     return Scaffold(
       extendBody: true,
-      body: _pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: SafeArea(
         top: false,
         child: Padding(
