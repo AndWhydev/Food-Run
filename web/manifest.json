@@ -1,6 +1,6 @@
 {
-    "name": "foodhub",
-    "short_name": "foodhub",
+    "name": "FoodRun",
+    "short_name": "FoodRun",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",
