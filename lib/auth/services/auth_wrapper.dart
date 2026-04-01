@@ -15,7 +15,7 @@ class AuthWrapper extends StatelessWidget {
       builder: (context, authSnapshot) {
         // Show loading while checking auth state
         if (authSnapshot.connectionState == ConnectionState.waiting) {
-          return const _LoadingScreen();
+          return const LoadingScreen();
         }
 
         // If no user is signed in, go to onboarding
@@ -29,7 +29,7 @@ class AuthWrapper extends StatelessWidget {
               }
             }
           });
-          return const _LoadingScreen();
+          return const LoadingScreen();
         }
 
         // User is signed in, check their role from Firestore
@@ -43,7 +43,7 @@ class AuthWrapper extends StatelessWidget {
           builder: (context, userSnapshot) {
             // Show loading while fetching user data
             if (userSnapshot.connectionState == ConnectionState.waiting) {
-              return const _LoadingScreen();
+              return const LoadingScreen();
             }
 
             // If user document doesn't exist, go to onboarding
@@ -57,7 +57,7 @@ class AuthWrapper extends StatelessWidget {
                   }
                 }
               });
-              return const _LoadingScreen();
+              return const LoadingScreen();
             }
 
             // Get user data and role
@@ -97,7 +97,7 @@ class AuthWrapper extends StatelessWidget {
               }
             });
 
-            return const _LoadingScreen();
+            return const LoadingScreen();
           },
         );
       },
@@ -106,33 +106,34 @@ class AuthWrapper extends StatelessWidget {
 }
 
 // Loading screen widget
-class _LoadingScreen extends StatelessWidget {
-  const _LoadingScreen();
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrange,
+      // backgroundColor: Colors.deepOrange,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.restaurant_menu, size: 100, color: Colors.white),
-            const SizedBox(height: 20),
-            Text(
-              'Food Hub',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 40),
-            // CircularProgressIndicator(
-            //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            // ),
-          ],
-        ),
+        // child: Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Icon(Icons.restaurant_menu, size: 100, color: Colors.white),
+        //     const SizedBox(height: 20),
+        //     Text(
+        //       'FoodRun',
+        //       style: TextStyle(
+        //         fontSize: 32,
+        //         fontWeight: FontWeight.bold,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //     const SizedBox(height: 40),
+        //     // CircularProgressIndicator(
+        //     //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        //     // ),
+        //   ],
+        // ),
+        child: Image.asset('assets/icons/tr.png'),
       ),
     );
   }

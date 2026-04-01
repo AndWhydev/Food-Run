@@ -1160,7 +1160,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         elevation: 0,
         backgroundColor: Colors.deepOrange,
         title: Text(
-          'FoodHub (Admin)',
+          'FoodRun (Admin)',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

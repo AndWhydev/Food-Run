@@ -31,9 +31,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'FoodHub',
+      title: 'FoodRun',
       theme: AppTheme.lightTheme,
       routerConfig: AppRouter.router,
     );
+   
   }
 }

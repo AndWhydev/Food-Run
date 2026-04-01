@@ -208,172 +208,181 @@ class Onboarding extends StatelessWidget {
     final width = size.width;
     final height = size.height;
 
-    return Scaffold(
-      body: Container(
-        width: width,
-        height: height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/onboard.jpg"),
-            fit: BoxFit.cover,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        body: Container(
+          width: width,
+          height: height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/onboard.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: width,
-                height: height * 0.6,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  width: width,
+                  height: height * 0.6,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black54,
+                        Colors.grey.shade700,
+                        Colors.grey.shade200,
+                        Colors.white,
+                      ],
+                      stops: const [0.0, 0.35, 0.55, 0.8, 1.0],
+                    ),
                   ),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black54,
-                      Colors.grey.shade700,
-                      Colors.grey.shade200,
-                      Colors.white,
-                    ],
-                    stops: const [0.0, 0.35, 0.55, 0.8, 1.0],
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: width * 0.08,
-                    vertical: height * 0.04,
-                  ),
-                  child: Column(
-                    children: [
-                      const Spacer(), // pushes button lower
-                      /// Get Started Button
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.08,
+                      vertical: height * 0.04,
+                    ),
+                    child: Column(
+                      children: [
+                        const Spacer(), // pushes button lower
+                        /// Get Started Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.deepOrange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                vertical: height * 0.02,
+                              ),
+                              elevation: 6,
                             ),
-                            padding: EdgeInsets.symmetric(
-                              vertical: height * 0.02,
-                            ),
-                            elevation: 6,
-                          ),
-                          onPressed: () {
-                            context.go('/login');
-                          },
-                          child: Text(
-                            "Get Started",
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      /// Divider with text
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Divider(color: Colors.white70, thickness: 1),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.04,
-                            ),
+                            onPressed: () {
+                              context.go('/login');
+                            },
                             child: Text(
-                              "or sign in with",
+                              "Get Started",
                               style: GoogleFonts.poppins(
-                                fontSize: 14,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                           ),
-                          const Expanded(
-                            child: Divider(color: Colors.white70, thickness: 1),
-                          ),
-                        ],
-                      ),
+                        ),
 
-                      const SizedBox(height: 16),
+                        const SizedBox(height: 24),
 
-                      /// Social Buttons with Asset Images
-                      Consumer<AuthProvider>(
-                        builder: (context, authProvider, child) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              authProvider.isLoading
-                                  ? const SizedBox(
-                                      width: 50,
-                                      height: 50,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 3,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                              Colors.deepOrange,
-                                            ),
-                                      ),
-                                    )
-                                  : _socialButton(
-                                      "assets/icons/google.png",
-                                      context,
-                                      authProvider,
-                                    ),
-                            ],
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// Signup Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              context.go('/signup');
-                            },
-                            child: Text(
-                              "Sign up",
-                              style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.deepOrange,
-                                decoration: TextDecoration.underline,
+                        /// Divider with text
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Divider(
+                                color: Colors.white70,
+                                thickness: 1,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: width * 0.04,
+                              ),
+                              child: Text(
+                                "or sign in with",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const Expanded(
+                              child: Divider(
+                                color: Colors.white70,
+                                thickness: 1,
+                              ),
+                            ),
+                          ],
+                        ),
 
-                      const SizedBox(height: 12),
-                    ],
+                        const SizedBox(height: 16),
+
+                        /// Social Buttons with Asset Images
+                        Consumer<AuthProvider>(
+                          builder: (context, authProvider, child) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                authProvider.isLoading
+                                    ? const SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                Colors.deepOrange,
+                                              ),
+                                        ),
+                                      )
+                                    : _socialButton(
+                                        "assets/icons/google.png",
+                                        context,
+                                        authProvider,
+                                      ),
+                              ],
+                            );
+                          },
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        /// Signup Row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account? ",
+                              style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                context.go('/signup');
+                              },
+                              child: Text(
+                                "Sign up",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.deepOrange,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 12),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

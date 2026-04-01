@@ -184,11 +184,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final Color primaryColor = Colors.deepOrange;
     final Color accentColor = Colors.deepOrange;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF9FAFB),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               // Top Header
@@ -198,19 +198,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   vertical: 18,
                   horizontal: 20,
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [primaryColor, accentColor],
+                    colors: [Colors.deepOrange, Colors.orangeAccent],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(18),
-                    bottomRight: Radius.circular(18),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 40, left: 10),
+                  padding: EdgeInsets.only(top: 40, left: 10, bottom: 10),
                   child: Row(
                     children: const [
                       Icon(Icons.person, color: Colors.white, size: 20),

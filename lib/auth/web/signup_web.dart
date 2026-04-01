@@ -333,7 +333,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Join FoodHub today & explore\nfresh meals anytime, anywhere",
+                          "Join FoodRun today & explore\nfresh meals anytime, anywhere",
                           style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,

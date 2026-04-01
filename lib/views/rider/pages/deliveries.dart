@@ -254,10 +254,11 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
   Widget build(BuildContext context) {
     final riderProvider = Provider.of<RiderProvider>(context, listen: false);
 
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // HEADER
@@ -275,46 +276,49 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                   bottomRight: Radius.circular(24),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10),
+              child: Padding(
+                padding: EdgeInsets.only(top: 40, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.local_shipping,
+                            color: Colors.white,
+                            size: 24,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.local_shipping,
-                          color: Colors.white,
-                          size: 24,
+                        SizedBox(width: 12),
+                        Text(
+                          "My Deliveries",
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        "My Deliveries",
-                        style: GoogleFonts.poppins(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  // TAB BUTTONS
-                  Row(
-                    children: [
-                      _buildTabButton('Active', 'active'),
-                      SizedBox(width: 8),
-                      _buildTabButton('Completed', 'completed'),
-                      SizedBox(width: 8),
-                      _buildTabButton('All', 'all'),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    // TAB BUTTONS
+                    Row(
+                      children: [
+                        _buildTabButton('Active', 'active'),
+                        SizedBox(width: 8),
+                        _buildTabButton('Completed', 'completed'),
+                        SizedBox(width: 8),
+                        _buildTabButton('All', 'all'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -879,7 +883,10 @@ class _DeliveryCard extends StatelessWidget {
                   SizedBox(width: 12),
                   Flexible(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.green.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),

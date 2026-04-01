@@ -17,10 +17,11 @@ class EarningsScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final double baseFont = size.width * 0.04;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
-      body: SafeArea(
-        child: StreamBuilder<List<OrderModel>>(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF5F7FA),
+        body: StreamBuilder<List<OrderModel>>(
           stream: riderProvider.listenCompletedOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -34,7 +35,11 @@ class EarningsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: Colors.red,
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       'Error: ${snapshot.error}',
@@ -76,7 +81,7 @@ class EarningsScreen extends StatelessWidget {
             }
 
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: EdgeInsets.only(bottom: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -84,107 +89,112 @@ class EarningsScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [primaryColor, accentColor],
+                        colors: [Colors.deepOrange, Colors.orangeAccent],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primaryColor.withOpacity(0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24),
+                      ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "All-Time Earnings",
-                          style: GoogleFonts.poppins(
-                            color: Colors.white70,
-                            fontSize: baseFont * 0.8,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 30, bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "All-Time Earnings",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white70,
+                              fontSize: baseFont * 0.8,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "\$${allTimeEarnings.toStringAsFixed(2)}",
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: baseFont * 2.1,
-                            fontWeight: FontWeight.bold,
+                          const SizedBox(height: 8),
+                          Text(
+                            "\$${allTimeEarnings.toStringAsFixed(2)}",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: baseFont * 2.1,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
 
                   // Monthly Earnings Card
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: cardColor,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12.withOpacity(0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${DateFormat('MMMM').format(now)} Earnings",
-                              style: GoogleFonts.poppins(
-                                color: Colors.grey[600],
-                                fontSize: baseFont * 0.8,
-                              ),
-                            ),
-                            Text(
-                              "\$${monthlyEarnings.toStringAsFixed(2)}",
-                              style: GoogleFonts.poppins(
-                                color: Colors.black87,
-                                fontSize: baseFont * 1.2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: primaryColor.withOpacity(0.1),
-                            shape: BoxShape.circle,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: cardColor,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
-                          child: Icon(
-                            Icons.trending_up,
-                            color: primaryColor,
-                            size: 24,
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${DateFormat('MMMM').format(now)} Earnings",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.grey[600],
+                                  fontSize: baseFont * 0.8,
+                                ),
+                              ),
+                              Text(
+                                "\$${monthlyEarnings.toStringAsFixed(2)}",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black87,
+                                  fontSize: baseFont * 1.2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: primaryColor.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.trending_up,
+                              color: primaryColor,
+                              size: 24,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 25),
 
                   // Recent Payouts Header
-                  Text(
-                    "Recent Payouts",
-                    style: GoogleFonts.poppins(
-                      fontSize: baseFont,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Recent Payouts",
+                      style: GoogleFonts.poppins(
+                        fontSize: baseFont,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -213,97 +223,107 @@ class EarningsScreen extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: orders.length,
-                          itemBuilder: (context, index) {
-                            final order = orders[index];
-                            double amount = 0;
-                            if (order.bids != null &&
-                                order.bids!.containsKey(riderId)) {
-                              final bidData =
-                                  order.bids![riderId] as Map<String, dynamic>;
-                              amount = (bidData['amount'] as num?)?.toDouble() ??
-                                  0.0;
-                            }
+                      : Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: orders.length,
+                            itemBuilder: (context, index) {
+                              final order = orders[index];
+                              double amount = 0;
+                              if (order.bids != null &&
+                                  order.bids!.containsKey(riderId)) {
+                                final bidData =
+                                    order.bids![riderId]
+                                        as Map<String, dynamic>;
+                                amount =
+                                    (bidData['amount'] as num?)?.toDouble() ??
+                                    0.0;
+                              }
 
-                            final dateStr = order.completedAt != null
-                                ? DateFormat('dd MMM, yyyy')
-                                    .format(order.completedAt!)
-                                : 'N/A';
+                              final dateStr = order.completedAt != null
+                                  ? DateFormat(
+                                      'dd MMM, yyyy',
+                                    ).format(order.completedAt!)
+                                  : 'N/A';
 
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 12),
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: cardColor,
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.04),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.1),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: primaryColor.withOpacity(0.1),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Icon(
-                                          Icons.delivery_dining,
-                                          color: primaryColor,
-                                          size: 24,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 14),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Order #${order.id.substring(0, 8)}",
-                                            style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: baseFont * 0.9,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                          Text(
-                                            "Delivered • $dateStr",
-                                            style: GoogleFonts.poppins(
-                                              color: Colors.grey[600],
-                                              fontSize: baseFont * 0.7,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    "+\$${amount.toStringAsFixed(2)}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.green[600],
-                                      fontSize: baseFont * 0.95,
-                                      fontWeight: FontWeight.bold,
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: cardColor,
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.04),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
                                     ),
+                                  ],
+                                  border: Border.all(
+                                    color: Colors.grey.withOpacity(0.1),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: primaryColor.withOpacity(
+                                              0.1,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.delivery_dining,
+                                            color: primaryColor,
+                                            size: 24,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 14),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Order #${order.id.substring(0, 8)}",
+                                              style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: baseFont * 0.9,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Delivered • $dateStr",
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.grey[600],
+                                                fontSize: baseFont * 0.7,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      "+\$${amount.toStringAsFixed(2)}",
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.green[600],
+                                        fontSize: baseFont * 0.95,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                 ],
               ),
