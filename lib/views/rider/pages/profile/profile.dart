@@ -210,18 +210,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 40, left: 10, bottom: 10),
+                  padding: const EdgeInsets.only(top: 40, left: 10, bottom: 10),
                   child: Row(
-                    children: const [
-                      Icon(Icons.person, color: Colors.white, size: 20),
-                      SizedBox(width: 8),
-                      Text(
+                    children: [
+                      const Icon(Icons.person, color: Colors.white, size: 20),
+                      const SizedBox(width: 8),
+                      const Text(
                         "Profile",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
                         ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.white, size: 20),
+                        onPressed: () => context.push("/edit-profile"),
                       ),
                     ],
                   ),
@@ -293,7 +298,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       leading: Icon(Icons.phone_outlined, color: accentColor),
                       title: const Text("Phone"),
-                      subtitle: Text(user?.phone ?? ""),
+                      subtitle: Text(
+                        (user?.phone != null && user!.phone.isNotEmpty)
+                            ? user.phone
+                            : "Add phone number",
+                        style: TextStyle(
+                          color: (user?.phone == null || user!.phone.isEmpty)
+                              ? Colors.redAccent
+                              : Colors.black87,
+                        ),
+                      ),
+                      trailing: const Icon(Icons.chevron_right, size: 20),
+                      onTap: () => context.push("/edit-profile"),
                     ),
 
                     // Region (static because no region stored)

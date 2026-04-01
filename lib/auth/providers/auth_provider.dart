@@ -302,6 +302,8 @@ class AuthProvider with ChangeNotifier {
         if (imageUrl != null) 'profileImage': imageUrl,
       });
 
+      await loadUser(); // Refresh local user model
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Profile updated successfully")),
       );

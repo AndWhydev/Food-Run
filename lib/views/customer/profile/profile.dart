@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodhub/auth/providers/auth_provider.dart';
+import 'package:foodhub/models/user_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -10,21 +11,26 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildProfileHeader(),
-            const SizedBox(height: 20),
-            _buildMenuList(context),
-          ],
+        child: Consumer<AuthProvider>(
+          builder: (context, auth, child) {
+            final user = auth.userModel;
+            return Column(
+              children: [
+                _buildProfileHeader(user),
+                const SizedBox(height: 20),
+                _buildMenuList(context, user),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(UserModel? user) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: Colors.deepOrange),
+      decoration: const BoxDecoration(color: Colors.deepOrange),
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -34,33 +40,42 @@ class UserProfileScreen extends StatelessWidget {
               shape: BoxShape.circle,
               color: Colors.white,
             ),
-            child: const CircleAvatar(
+            child: CircleAvatar(
               radius: 50,
               backgroundColor: Colors.white,
-              backgroundImage: AssetImage('assets/images/boy.jpg'),
+              backgroundImage: user?.profileImage != null
+                  ? NetworkImage(user!.profileImage!)
+                  : const AssetImage('assets/images/boy.jpg') as ImageProvider,
             ),
           ),
           const SizedBox(height: 15),
-          const Text(
-            'John Doe',
-            style: TextStyle(
+          Text(
+            user?.name ?? 'Guest User',
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 5),
-          const Text(
-            'john.doe@email.com',
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+          Text(
+            user?.email ?? 'No email available',
+            style: const TextStyle(fontSize: 14, color: Colors.white70),
           ),
+          if (user?.phone != null && user!.phone.isNotEmpty) ...[
+            const SizedBox(height: 5),
+            Text(
+              user.phone,
+              style: const TextStyle(fontSize: 14, color: Colors.white70),
+            ),
+          ],
           const SizedBox(height: 20),
         ],
       ),
     );
   }
 
-  Widget _buildMenuList(BuildContext context) {
+  Widget _buildMenuList(BuildContext context, UserModel? user) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -68,7 +83,7 @@ class UserProfileScreen extends StatelessWidget {
           _buildMenuItem(
             icon: Icons.person,
             title: 'Edit Profile',
-            onTap: () {},
+            onTap: () => context.push('/edit-profile'),
           ),
 
           _buildMenuItem(
