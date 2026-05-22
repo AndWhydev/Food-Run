@@ -1018,6 +1018,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               onTap: () {
                 showDialog(
                   context: context,
+                  barrierDismissible: true,
                   builder: (_) => AlertDialog(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -1596,6 +1597,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             onTrack: () {
                               showDialog(
                                 context: context,
+                                barrierDismissible: true,
                                 builder: (_) => AlertDialog(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
