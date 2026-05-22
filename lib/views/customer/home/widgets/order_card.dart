@@ -248,7 +248,9 @@ class OrderCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Order #${order.id.substring(0, 8)}',
+                              order.orderNumber != null
+                                  ? 'Order #${order.orderNumber}'
+                                  : 'Order #${order.id.substring(0, 8)}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -606,17 +608,27 @@ class OrderCard extends StatelessWidget {
       final now = DateTime.now();
       final difference = now.difference(dateTime);
 
+      final day = dateTime.day.toString().padLeft(2, '0');
+      final month = dateTime.month.toString().padLeft(2, '0');
+      final year = dateTime.year;
+      final hour = dateTime.hour.toString().padLeft(2, '0');
+      final minute = dateTime.minute.toString().padLeft(2, '0');
+      final absolute = '$day/$month/$year $hour:$minute';
+
+      String relative;
       if (difference.inMinutes < 1) {
-        return 'Just now';
+        relative = 'Just now';
       } else if (difference.inMinutes < 60) {
-        return '${difference.inMinutes}m ago';
+        relative = '${difference.inMinutes}m ago';
       } else if (difference.inHours < 24) {
-        return '${difference.inHours}h ago';
+        relative = '${difference.inHours}h ago';
       } else {
-        return '${difference.inDays}d ago';
+        relative = '${difference.inDays}d ago';
       }
+
+      return '$absolute ($relative)';
     } catch (e) {
-      return 'Recently';
+      return 'Unknown';
     }
   }
 }

@@ -270,16 +270,36 @@ class AuthProvider with ChangeNotifier {
   // ---------------------------------------------------------------------------
   // CHANGE PASSWORD
   // ---------------------------------------------------------------------------
-  Future<void> changePassword(String newPassword, BuildContext context) async {
+  Future<void> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
     try {
-      await _auth.currentUser?.updatePassword(newPassword);
+      _setLoading(true);
+      final user = _auth.currentUser;
+      if (user == null) throw Exception("Not logged in");
+
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPassword,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPassword);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Password updated successfully")),
       );
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? "Failed to change password")),
+      );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error updating password: $e")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    } finally {
+      _setLoading(false);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:foodhub/auth/layout%20decider/home_page.dart';
 import 'package:foodhub/auth/services/auth_wrapper.dart';
 import 'package:foodhub/views/onboarding/onboarding.dart';
@@ -17,6 +18,25 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     // initialLocation: _isWeb ? '/login' : '/onboarding',
     initialLocation: '/auth', // make /auth the first route
+    errorBuilder: (context, state) => Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, size: 64, color: Colors.deepOrange),
+            SizedBox(height: 16),
+            Text('Page Not Found', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text('The page you are looking for does not exist.'),
+            SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () => context.go('/auth'),
+              child: Text('Go Home'),
+            ),
+          ],
+        ),
+      ),
+    ),
     routes: [
       GoRoute(
         path: '/onboarding',
@@ -58,12 +78,24 @@ class AppRouter {
       ///
       GoRoute(
         path: '/edit-profile',
-        builder: (context, state) => const EditProfileScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const EditProfileScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
       ),
 
       GoRoute(
         path: '/change-password',
-        builder: (context, state) => const ChangePasswordScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const ChangePasswordScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
       ),
 
       GoRoute(
